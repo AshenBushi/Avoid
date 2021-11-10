@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemySpawner: {fileID: 0}
-  _health: 5
+  _maxHealth: 5
 --- !u!114 &8092122046103719735
 MonoBehaviour:
   m_ObjectHideFlags: 0

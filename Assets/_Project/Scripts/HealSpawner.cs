@@ -1,9 +1,8 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using Random = UnityEngine.Random;
 
-public class EnemySpawner : ObjectPool<Enemy>
+public class HealSpawner : ObjectPool<Heal>, ISpawner
 {
     [Space(20f)] 
     [SerializeField] private SideRange _leftSide;
@@ -14,14 +13,12 @@ public class EnemySpawner : ObjectPool<Enemy>
     [Header("Spawn Parameters")]
     [SerializeField] private float _defaultDelay;
     [SerializeField] private float _defaultMoveDuration;
-    [Space(10f)] 
-    [SerializeField] private ScoreCounter _scoreCounter;
-
+    
     private float _timer = 0f;
     private bool _canSpawn = false;
     private float _spawnDelay;
     private float _moveDuration;
-
+    
     private void Start()
     {
         _spawnDelay = _defaultDelay;
@@ -36,15 +33,13 @@ public class EnemySpawner : ObjectPool<Enemy>
 
         if (_timer >= _spawnDelay)
         {
-            SpawnEnemy();
+            Spawn();
             _timer = 0;
         }
     }
-
-    private void SpawnEnemy()
+    
+    public void GetRandomPositions(out Vector3 startPosition, out Vector3 endPosition)
     {
-        var startPosition = new Vector3();
-        var endPosition = new Vector3();
         var randomIndex = Random.Range(0, 4);
 
         switch (randomIndex)
@@ -66,31 +61,20 @@ public class EnemySpawner : ObjectPool<Enemy>
                 endPosition = _topSide.GetRandomPoint();
                 break;
             default:
+                startPosition = _leftSide.GetRandomPoint();
+                endPosition = _rightSide.GetRandomPoint();
                 break;
         }
+    }
+
+    public void Spawn()
+    {
+        GetRandomPositions(out var startPosition, out var endPosition);
         
-        if (TryGetObject(out var enemy))
+        if (TryGetObject(out var heal))
         {
-            enemy.Init(startPosition, endPosition, 1, _moveDuration);
-            enemy.OnMovingEnd += OnEnemyMovingEnd;
+            heal.Init(startPosition, endPosition, _moveDuration);
         }
-        
-        IncreaseDifficult();
-    }
-
-    private void OnEnemyMovingEnd(Enemy enemy)
-    {
-        _scoreCounter.AddScore();
-        enemy.OnMovingEnd -= OnEnemyMovingEnd;
-    }
-
-    private void IncreaseDifficult()
-    {
-        var tempValue = _defaultMoveDuration - 0.4f * (_scoreCounter.Score / 100);
-        
-        _moveDuration = tempValue <= 0 ? 0.2f : tempValue;
-
-        _spawnDelay = _defaultDelay - 0.9f * (float)(_scoreCounter.Score / 100f - Math.Truncate(_scoreCounter.Score / 100f));
     }
     
     public void StartGame()
@@ -101,20 +85,5 @@ public class EnemySpawner : ObjectPool<Enemy>
     public void EndGame()
     {
         _canSpawn = false;
-    }
-}
-
-[Serializable]
-public class SideRange
-{
-    [SerializeField] private Vector3 _firstPoint;
-    [SerializeField] private Vector3 _lastPoint;
-
-    public Vector3 GetRandomPoint()
-    {
-        var randomPoint = new Vector3(Random.Range(_firstPoint.x, _lastPoint.x),
-            Random.Range(_firstPoint.y, _lastPoint.y), Random.Range(_firstPoint.z, _lastPoint.z));
-
-        return randomPoint;
     }
 }

@@ -1,29 +1,29 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Enemy : MonoBehaviour
+public abstract class Shot : MonoBehaviour
 {
-    private Tween _mover;
     private RectTransform _transform;
     private Vector3 _startPosition;
     private Vector3 _endPosition;
-    private int _damage;
     private float _moveDuration;
+    
+    protected Tween Mover;
 
-    public event UnityAction<Enemy> OnMovingEnd;
+    public event UnityAction<Shot> OnMovingEnd;
 
     private void Awake()
     {
         _transform = GetComponent<RectTransform>();
     }
 
-    public void Init(Vector3 startPosition, Vector3 endPosition, int damage, float moveDuration)
+    public void Init(Vector3 startPosition, Vector3 endPosition, float moveDuration)
     {
         _startPosition = startPosition;
         _endPosition = endPosition;
-        _damage = damage;
         _moveDuration = moveDuration;
 
         gameObject.SetActive(true);
@@ -31,23 +31,15 @@ public class Enemy : MonoBehaviour
         Move();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (!other.TryGetComponent(out Player player)) return;
-        
-        Debug.Log("Attack");
-        player.TakeDamage(_damage);
-        _mover.Kill();
-        gameObject.SetActive(false);
-    }
+    protected abstract void OnTriggerEnter2D(Collider2D other);
 
     private void Move()
     {
         _transform.localPosition = _startPosition;
         
-        _mover = _transform.DOLocalMove(_endPosition, _moveDuration).SetEase(Ease.Linear).SetLink(gameObject);
+        Mover = _transform.DOLocalMove(_endPosition, _moveDuration).SetEase(Ease.Linear).SetLink(gameObject);
 
-        _mover.OnComplete(() =>
+        Mover.OnComplete(() =>
         {
             OnMovingEnd?.Invoke(this);
             

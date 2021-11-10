@@ -8,19 +8,22 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     [SerializeField] private EnemySpawner _enemySpawner;
-    [SerializeField] private int _health;
+    [SerializeField] private int _maxHealth;
 
     private PlayerMovement _playerMovement;
     private Animator _animator;
 
-    public int Health => _health;
-    
+    public int Health { get; private set; }
+
     public event UnityAction OnTookDamage;
+    public event UnityAction OnHeal;
 
     private void Awake()
     {
         _playerMovement = GetComponent<PlayerMovement>();
         _animator = GetComponent<Animator>();
+
+        Health = _maxHealth;
     }
 
     private void Die()
@@ -37,15 +40,27 @@ public class Player : MonoBehaviour
     {
         SoundManager.Instance.PlaySound(Sound.TakeDamage);
         
-        _health -= damage;
+        Health -= damage;
         
         _animator.Play("TakeDamage");
         
         OnTookDamage?.Invoke();
 
-        if (_health <= 0)
+        if (Health <= 0)
         {
             Die();
         }
+    }
+
+    public void Heal()
+    {
+        if (Health + 1 <= _maxHealth)
+        {
+            Health++;
+        }
+        
+        _animator.Play("Heal");
+        
+        OnHeal?.Invoke();
     }
 }

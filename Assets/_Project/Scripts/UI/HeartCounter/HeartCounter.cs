@@ -10,12 +10,7 @@ public class HeartCounter : MonoBehaviour
     
     private List<Heart> _hearts = new List<Heart>();
     private int _currentHeart;
-
-    private void Awake()
-    {
-        Init();
-    }
-
+    
     public void Init()
     {
         if (_hearts.Count > 0)
@@ -36,14 +31,21 @@ public class HeartCounter : MonoBehaviour
         _currentHeart = _hearts.Count - 1;
     }
 
+    private void Start()
+    {
+        Init();
+    }
+    
     private void OnEnable()
     {
         _player.OnTookDamage += OnTookDamage;
+        _player.OnHeal += OnHeal;
     }
 
     private void OnDisable()
     {
         _player.OnTookDamage -= OnTookDamage;
+        _player.OnHeal += OnHeal;
     }
 
     private void OnTookDamage()
@@ -51,5 +53,14 @@ public class HeartCounter : MonoBehaviour
         _hearts[_currentHeart].DisableHeart();
 
         _currentHeart--;
+    }
+    
+    private void OnHeal()
+    {
+        if(_currentHeart + 1 >= 5) return;
+        
+        _currentHeart++;
+        
+        _hearts[_currentHeart].EnableHeart();
     }
 }
