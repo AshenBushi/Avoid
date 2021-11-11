@@ -8,9 +8,9 @@ public interface ISpawner
     
     public void Spawn();
 
-    public void StartGame();
+    public void StartSpawning();
 
-    public void EndGame();
+    public void EndSpawning();
 }
 
 [Serializable]

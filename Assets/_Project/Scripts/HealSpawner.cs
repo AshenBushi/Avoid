@@ -77,12 +77,12 @@ public class HealSpawner : ObjectPool<Heal>, ISpawner
         }
     }
     
-    public void StartGame()
+    public void StartSpawning()
     {
         _canSpawn = true;
     }
     
-    public void EndGame()
+    public void EndSpawning()
     {
         _canSpawn = false;
     }

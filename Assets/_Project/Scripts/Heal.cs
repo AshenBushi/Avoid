@@ -9,6 +9,8 @@ public class Heal : Shot
     {
         if (!other.TryGetComponent(out Player player)) return;
         
+        SoundManager.Instance.PlaySound(Sound.Heal);
+        
         player.Heal();
         Mover.Kill();
         gameObject.SetActive(false);

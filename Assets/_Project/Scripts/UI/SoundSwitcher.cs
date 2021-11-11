@@ -19,11 +19,11 @@ public class SoundSwitcher : MonoBehaviour
 
     private void Start()
     {
-        _image.color = SoundManager.Instance.SoundState ? _enabled : _disabled;
+        _image.color = SoundManager.Instance.VolumeState ? _enabled : _disabled;
     }
 
     public void SwitchSound()
     {
-        _image.color = SoundManager.Instance.SwitchSound() ? _enabled : _disabled;
+        _image.color = SoundManager.Instance.SwitchVolume() ? _enabled : _disabled;
     }
 }

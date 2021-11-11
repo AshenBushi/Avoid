@@ -7,7 +7,6 @@ using UnityEngine.Events;
 [RequireComponent(typeof(PlayerMovement), typeof(Animator))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private int _maxHealth;
 
     private PlayerMovement _playerMovement;
@@ -31,9 +30,7 @@ public class Player : MonoBehaviour
         UIManager.Instance.GameOverScreen.Show();
         UIManager.Instance.GameScreen.Hide();
         
-        _enemySpawner.EndGame();
-
-        Time.timeScale = 0;
+        SpawnersManager.Instance.EndSpawning();
     }
     
     public void TakeDamage(int damage)

@@ -99,12 +99,12 @@ public class EnemySpawner : ObjectPool<Enemy>, ISpawner
         IncreaseDifficult();
     }
     
-    public void StartGame()
+    public void StartSpawning()
     {
         _canSpawn = true;
     }
     
-    public void EndGame()
+    public void EndSpawning()
     {
         _canSpawn = false;
     }

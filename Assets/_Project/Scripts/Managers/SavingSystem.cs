@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ public class SavingSystem : Singleton<SavingSystem>
     
     protected override void Awake()
     {
-        base.Awake();
+        MakeGlobal();
 
         Load();
     }
@@ -52,14 +53,17 @@ public class SavingSystem : Singleton<SavingSystem>
     }
 }
 
+[Serializable]
 public class Data
 {
-    public bool SoundState;
+    public bool VolumeState;
     public int BestScore;
+    public int DeathCount;
 
     public Data()
     {
-        SoundState = true;
+        VolumeState = true;
         BestScore = 0;
+        DeathCount = 0;
     }
 }

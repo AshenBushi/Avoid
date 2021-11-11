@@ -1,39 +1,48 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
-[RequireComponent(typeof(AudioSource))]
 public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] private AudioClip[] _sounds;
+    [SerializeField] private AudioSource _soundSource;
+    [SerializeField] private AudioSource _musicSource;
+    [SerializeField] private AudioMixer _masterMixer;
 
-    private AudioSource _audioSource;
-
-    public bool SoundState => SavingSystem.Instance.Data.SoundState;
+    public bool VolumeState => SavingSystem.Instance.Data.VolumeState;
 
     protected override void Awake()
     {
-        base.Awake();
-
-        _audioSource = GetComponent<AudioSource>();
+        MakeGlobal();
     }
 
-    public bool SwitchSound()
+    private void Start()
     {
-        SavingSystem.Instance.Data.SoundState = !SoundState;
+        _masterMixer.SetFloat("Volume", VolumeState ? 0f : -80f);
+        
+        _musicSource.Play();
+    }
+
+    public bool SwitchVolume()
+    {
+        SavingSystem.Instance.Data.VolumeState = !VolumeState;
         SavingSystem.Instance.Save();
 
-        return SoundState;
+        _masterMixer.SetFloat("Volume", VolumeState ? 0f : -80f); 
+
+        return VolumeState;
     }
 
     public void PlaySound(Sound sound)
     {
-        if(SoundState)
-            _audioSource.PlayOneShot(_sounds[(int)sound]);
+        if(VolumeState)
+            _soundSource.PlayOneShot(_sounds[(int)sound]);
     }
 }
 
 public enum Sound
 {
     Button,
-    TakeDamage
+    TakeDamage,
+    Heal
 }
