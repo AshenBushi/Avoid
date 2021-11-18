@@ -1,13 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
 public class SoundSwitcher : MonoBehaviour
 {
-    [SerializeField] private Color _enabled;
     [SerializeField] private Color _disabled;
 
     private Image _image;
@@ -19,11 +15,23 @@ public class SoundSwitcher : MonoBehaviour
 
     private void Start()
     {
-        _image.color = SoundManager.Instance.VolumeState ? _enabled : _disabled;
+        ColorManager.Instance.OnColorChanged += OnColorChanged;
+        _image.color = SoundManager.Instance.VolumeState ? ColorManager.Instance.GameColor : _disabled;
+    }
+
+    private void OnDisable()
+    {
+        ColorManager.Instance.OnColorChanged -= OnColorChanged;
     }
 
     public void SwitchSound()
     {
-        _image.color = SoundManager.Instance.SwitchVolume() ? _enabled : _disabled;
+        _image.color = SoundManager.Instance.SwitchVolume() ? ColorManager.Instance.GameColor : _disabled;
+    }
+
+    private void OnColorChanged()
+    {
+        if (SavingSystem.Instance.Data.VolumeState)
+            _image.color = ColorManager.Instance.GameColor;
     }
 }

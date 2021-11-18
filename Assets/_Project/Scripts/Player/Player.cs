@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
-using DG.Tweening;
 
 [RequireComponent(typeof(PlayerMovement), typeof(Animator))]
 public class Player : MonoBehaviour
@@ -13,7 +10,7 @@ public class Player : MonoBehaviour
     private PlayerMovement _playerMovement;
     private Animator _animator;
     private RectTransform _rectTransform;
-    private Vector3 _stockScale = new Vector3(1.2f, 1.2f);
+    private Vector3 _standartScale;
 
     public int Health { get; private set; }
 
@@ -25,7 +22,7 @@ public class Player : MonoBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
         _animator = GetComponent<Animator>();
         _rectTransform = GetComponent<RectTransform>();
-        _stockScale = _rectTransform.localScale;
+        _standartScale = _rectTransform.localScale;
 
         Health = _maxHealth;
     }
@@ -82,7 +79,7 @@ public class Player : MonoBehaviour
     {
         var scale = _rectTransform.localScale;
 
-        if (scale.x < _stockScale.x && scale.y < _stockScale.y)
+        if (scale.x < _standartScale.x && scale.y < _standartScale.y)
             scale = new Vector3(scale.x + 0.2f, scale.y + 0.2f);
 
         _rectTransform.DOScale(scale, 0.3f).SetLink(gameObject);

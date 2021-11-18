@@ -301,7 +301,6 @@ GameObject:
   - component: {fileID: 107315826}
   - component: {fileID: 107315825}
   - component: {fileID: 107315828}
-  - component: {fileID: 107315829}
   m_Layer: 5
   m_Name: SoundSwitcher
   m_TagString: Untagged
@@ -436,18 +435,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enabled: {r: 0, g: 1, b: 0, a: 1}
   _disabled: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 1}
---- !u!114 &107315829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107315823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bb4b6239c4f0fa44ab63001f481d73c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &110535908
 GameObject:
   m_ObjectHideFlags: 0
