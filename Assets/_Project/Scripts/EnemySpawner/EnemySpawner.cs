@@ -53,7 +53,7 @@ public class EnemySpawner : ObjectPool<Enemy>, ISpawner
         
         _moveDuration = tempValue <= 0 ? 0.2f : tempValue;
 
-        _spawnDelay = _defaultDelay - 0.9f * (float)(_scoreCounter.Score / 100f - Math.Truncate(_scoreCounter.Score / 100f));
+        _spawnDelay = _defaultDelay - 0.8f * (float)(_scoreCounter.Score / 100f - Math.Truncate(_scoreCounter.Score / 100f));
     }
     
     public void GetRandomPositions(out Vector3 startPosition, out Vector3 endPosition)

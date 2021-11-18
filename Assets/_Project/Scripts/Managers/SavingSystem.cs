@@ -59,11 +59,13 @@ public class Data
     public bool VolumeState;
     public int BestScore;
     public int DeathCount;
+    public Color GameColor;
 
     public Data()
     {
         VolumeState = true;
         BestScore = 0;
         DeathCount = 0;
+        GameColor = Color.green;
     }
 }
