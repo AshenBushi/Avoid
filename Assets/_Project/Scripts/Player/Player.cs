@@ -63,6 +63,14 @@ public class Player : MonoBehaviour
         OnHeal?.Invoke();
     }
 
+    public void MaxHeal()
+    {
+        for (int i = 0; i < _maxHealth; i++)
+        {
+            Heal();
+        }
+    }
+
     private void ReduceSize()
     {
         var scale = _rectTransform.localScale;

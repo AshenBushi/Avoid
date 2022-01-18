@@ -1,32 +1,47 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOverScreen : UIScreen
 {
+    [SerializeField] private Player _player;
     [SerializeField] private ScoreCounter _scoreCounter;
+    [SerializeField] private Button _continueButton;
     [SerializeField] private TMP_Text _score;
     [SerializeField] private TMP_Text _bestScore;
 
-    private void OnAdClosed(object sender, EventArgs e)
+    private bool _isGameContinue = false;
+
+    private void OnAdClosedInterstitial(object sender, EventArgs e)
     {
-        Debug.Log("Worked");
-        
-        AdManager.Instance.Interstitial.OnAdClosed -= OnAdClosed;
+        Debug.Log("Interstitial Worked");
+
+        AdManager.Instance.Interstitial.OnAdClosed -= OnAdClosedInterstitial;
         SceneManager.LoadScene(0);
     }
-    
+
+    private void OnAdClosedRewarded(object sender, EventArgs e)
+    {
+        Debug.Log("Rewarded Worked");
+
+        AdManager.Instance.RewardedAd.OnAdClosed -= OnAdClosedInterstitial;
+
+        Hide();
+    }
+
     public override void Show()
     {
         base.Show();
 
+        if (_isGameContinue)
+            _continueButton.gameObject.SetActive(false);
+
         _score.text = _scoreCounter.Score.ToString();
 
         SavingSystem.Instance.Data.DeathCount++;
-        
+
         if (SavingSystem.Instance.Data.BestScore < _scoreCounter.Score)
         {
             SavingSystem.Instance.Data.BestScore = _scoreCounter.Score;
@@ -36,17 +51,36 @@ public class GameOverScreen : UIScreen
         _bestScore.text = SavingSystem.Instance.Data.BestScore.ToString();
     }
 
+    public override void Hide()
+    {
+        base.Hide();
+
+        UIManager.Instance.GameScreen.Show();
+        SpawnersManager.Instance.StartSpawning();
+
+        _player.MaxHeal();
+    }
+
     public void RestartGame()
     {
         SoundManager.Instance.PlaySound(Sound.Button);
 
-        if(AdManager.Instance.ShowInterstitial())
+        if (AdManager.Instance.ShowInterstitial())
         {
-            AdManager.Instance.Interstitial.OnAdClosed += OnAdClosed;
+            AdManager.Instance.Interstitial.OnAdClosed += OnAdClosedInterstitial;
         }
         else
         {
             SceneManager.LoadScene(0);
         }
+    }
+
+    public void ContinueGame()
+    {
+        if (_isGameContinue) return;
+
+        AdManager.Instance.RewardedAd.OnAdClosed += OnAdClosedRewarded;
+        AdManager.Instance.ShowRewardVideo();
+        _isGameContinue = true;
     }
 }

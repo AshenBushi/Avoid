@@ -17,7 +17,7 @@ public class AdManager : Singleton<AdManager>
     {
         MakeGlobal();
 
-        MobileAds.Initialize(initStatus => {});
+        MobileAds.Initialize(initStatus => { });
 
         InitializeRewarded();
         InitializeInterstitial();
@@ -36,6 +36,7 @@ public class AdManager : Singleton<AdManager>
         var request = new AdRequest.Builder().Build();
 
         RewardedAd = new RewardedAd(rewardId);
+        RewardedAd.OnAdClosed += OnRewardedClosed;
         RewardedAd.LoadAd(request);
     }
 
@@ -68,11 +69,17 @@ public class AdManager : Singleton<AdManager>
         InitializeInterstitial();
         StartCoroutine(ReloadInterstitial());
     }
-    
+
+    private void OnRewardedClosed(object sender, EventArgs e)
+    {
+        Debug.Log("Work");
+        InitializeRewarded();
+    }
+
     private IEnumerator ReloadInterstitial()
     {
         _isInterstitialShowed = true;
-        
+
         yield return new WaitForSeconds(_delayBetweenInterstitial);
 
         _isInterstitialShowed = false;
@@ -81,16 +88,18 @@ public class AdManager : Singleton<AdManager>
     public bool ShowInterstitial()
     {
         if (!Interstitial.IsLoaded() || _isInterstitialShowed || SavingSystem.Instance.Data.DeathCount < 10) return false;
-        
+
         Interstitial.Show();
 
         return true;
     }
 
-    public void ShowRewardVideo()
+    public bool ShowRewardVideo()
     {
-        if (!RewardedAd.IsLoaded()) return;
-        
+        if (!RewardedAd.IsLoaded()) return false;
+
         RewardedAd.Show();
+
+        return true;
     }
 }
