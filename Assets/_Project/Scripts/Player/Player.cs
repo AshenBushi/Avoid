@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     {
         SoundManager.Instance.PlaySound(Sound.TakeDamage);
 
+        VibrationManager.Instance.PlayVibration();
+
         Health -= damage;
         ReduceSize();
 
