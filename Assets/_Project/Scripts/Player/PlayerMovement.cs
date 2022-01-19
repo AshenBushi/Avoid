@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector2 _rightBottomBorder;
 
     private RectTransform _rectTransform;
+    private bool _isCanMove = true;
 
     private Vector2 PlayerPosition => _rectTransform.localPosition;
 
@@ -16,8 +17,20 @@ public class PlayerMovement : MonoBehaviour
         _rectTransform = GetComponent<RectTransform>();
     }
 
+    public void AllowMove()
+    {
+        _isCanMove = true;
+    }
+
+    public void DisallowMove()
+    {
+        _isCanMove = false;
+    }
+
     public void Move(Vector2 delta)
     {
+        if (!_isCanMove) return;
+
         var nextPosition = PlayerPosition + delta;
 
         if (nextPosition.x >= _rightBottomBorder.x || nextPosition.x <= _leftTopBorder.x ||

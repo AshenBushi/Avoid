@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private Animator _animator;
     private RectTransform _rectTransform;
     private Vector3 _standartScale;
+    private bool _isCanTakingDamage = true;
 
     public int Health { get; private set; }
 
@@ -35,8 +36,30 @@ public class Player : MonoBehaviour
         SpawnersManager.Instance.EndSpawning();
     }
 
+    public void AllowTakingDamage()
+    {
+        _isCanTakingDamage = true;
+    }
+
+    public void DisallowTakingDamage()
+    {
+        _isCanTakingDamage = false;
+    }
+
+    public void AllowMove()
+    {
+        _playerMovement.AllowMove();
+    }
+
+    public void DisallowMove()
+    {
+        _playerMovement.DisallowMove();
+    }
+
     public void TakeDamage(int damage)
     {
+        if (!_isCanTakingDamage) return;
+
         SoundManager.Instance.PlaySound(Sound.TakeDamage);
 
         VibrationManager.Instance.PlayVibration();

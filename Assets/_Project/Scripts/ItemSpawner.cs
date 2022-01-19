@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealSpawner : ObjectPool<Heal>, ISpawner
+public class ItemSpawner : ObjectPool<Shot>, ISpawner
 {
     [Space(20f)] 
     [SerializeField] private SideRange _leftSide;

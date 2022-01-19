@@ -1,16 +1,22 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class Heal : Shot
+public abstract class Bonus : Shot
 {
+    protected Player _player;
+
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.TryGetComponent(out Player player)) return;
-        
-        SoundManager.Instance.PlaySound(Sound.Heal);
-        
-        player.Heal();
+
+        _player = player;
+
+        //SoundManager.Instance.PlaySound(Sound.Heal);
+
+        UsingEffect();
         Mover.Kill();
         gameObject.SetActive(false);
     }
+
+    protected abstract void UsingEffect();
 }
