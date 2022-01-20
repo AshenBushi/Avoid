@@ -13,10 +13,10 @@ public abstract class Bonus : Shot
 
         //SoundManager.Instance.PlaySound(Sound.Heal);
 
-        UsingEffect();
+        UseBonus();
         Mover.Kill();
         gameObject.SetActive(false);
     }
 
-    protected abstract void UsingEffect();
+    protected abstract void UseBonus();
 }

@@ -10,10 +10,13 @@ public class Player : MonoBehaviour
     private PlayerMovement _playerMovement;
     private Animator _animator;
     private RectTransform _rectTransform;
+    private BonusEffectAnimationSetter _effectSetters;
     private Vector3 _standartScale;
     private bool _isCanTakingDamage = true;
+    private bool _isUsingBonus = false;
 
     public int Health { get; private set; }
+    public bool IsUsingBonus => _isUsingBonus;
 
     public event UnityAction OnTookDamage;
     public event UnityAction OnHeal;
@@ -23,17 +26,11 @@ public class Player : MonoBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
         _animator = GetComponent<Animator>();
         _rectTransform = GetComponent<RectTransform>();
+        _effectSetters = GetComponent<BonusEffectAnimationSetter>();
+
         _standartScale = _rectTransform.localScale;
 
         Health = _maxHealth;
-    }
-
-    private void Die()
-    {
-        UIManager.Instance.GameOverScreen.Show();
-        UIManager.Instance.GameScreen.Hide();
-
-        SpawnersManager.Instance.EndSpawning();
     }
 
     public void AllowTakingDamage()
@@ -54,6 +51,23 @@ public class Player : MonoBehaviour
     public void DisallowMove()
     {
         _playerMovement.DisallowMove();
+    }
+
+    public void AllowUsingBonus()
+    {
+        _isUsingBonus = false;
+    }
+
+    public void DisallowUsingBonus()
+    {
+        _isUsingBonus = true;
+    }
+
+    public void PlayEffectAnimation(TypeEffectAnimation typeAnimation)
+    {
+        if (_effectSetters == null) return;
+
+        _effectSetters.Play(_animator, typeAnimation);
     }
 
     public void TakeDamage(int damage)
@@ -94,6 +108,14 @@ public class Player : MonoBehaviour
         {
             Heal();
         }
+    }
+
+    private void Die()
+    {
+        UIManager.Instance.GameOverScreen.Show();
+        UIManager.Instance.GameScreen.Hide();
+
+        SpawnersManager.Instance.EndSpawning();
     }
 
     private void ReduceSize()

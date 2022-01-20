@@ -245,7 +245,7 @@ MonoBehaviour:
   _bottomSide:
     _firstPoint: {x: -500, y: -510, z: 0}
     _lastPoint: {x: 500, y: -510, z: 0}
-  _defaultDelay: 7
+  _defaultDelay: 3
   _defaultMoveDuration: 3
 --- !u!1 &88003047
 GameObject:
@@ -2928,7 +2928,7 @@ MonoBehaviour:
   _bottomSide:
     _firstPoint: {x: -500, y: -510, z: 0}
     _lastPoint: {x: 500, y: -510, z: 0}
-  _defaultDelay: 8
+  _defaultDelay: 3
   _defaultMoveDuration: 3
 --- !u!1 &1238626818
 GameObject:
