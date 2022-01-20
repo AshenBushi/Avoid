@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private PlayerMovement _playerMovement;
     private Animator _animator;
     private RectTransform _rectTransform;
-    private BonusEffectAnimationSetter _effectSetters;
+    private PlayerEffectSetter _effectSetters;
     private Vector3 _standartScale;
     private bool _isCanTakingDamage = true;
     private bool _isUsingBonus = false;
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
         _animator = GetComponent<Animator>();
         _rectTransform = GetComponent<RectTransform>();
-        _effectSetters = GetComponent<BonusEffectAnimationSetter>();
+        _effectSetters = GetComponent<PlayerEffectSetter>();
 
         _standartScale = _rectTransform.localScale;
 
@@ -63,11 +63,18 @@ public class Player : MonoBehaviour
         _isUsingBonus = true;
     }
 
-    public void PlayEffectAnimation(TypeEffectAnimation typeAnimation)
+    public void PlayEffectAnimation(TypeEffect typeAnimation)
     {
         if (_effectSetters == null) return;
 
-        _effectSetters.Play(_animator, typeAnimation);
+        _effectSetters.Play(typeAnimation);
+    }
+
+    public void StopEffectAnimation(TypeEffect typeAnimation)
+    {
+        if (_effectSetters == null) return;
+
+        _effectSetters.Stop(typeAnimation);
     }
 
     public void TakeDamage(int damage)

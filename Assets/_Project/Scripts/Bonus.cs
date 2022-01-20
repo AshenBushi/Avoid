@@ -8,6 +8,7 @@ public abstract class Bonus : Shot
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.TryGetComponent(out Player player)) return;
+        if (player.IsUsingBonus) return;
 
         _player = player;
 

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : ObjectPool<Enemy>, ISpawner
@@ -41,21 +40,6 @@ public class EnemySpawner : ObjectPool<Enemy>, ISpawner
         }
     }
 
-    private void OnEnemyMovingEnd(Shot enemy)
-    {
-        _scoreCounter.AddScore();
-        enemy.OnMovingEnd -= OnEnemyMovingEnd;
-    }
-
-    private void IncreaseDifficult()
-    {
-        var tempValue = _defaultMoveDuration - 0.4f * (_scoreCounter.Score / 100);
-        
-        _moveDuration = tempValue <= 0 ? 0.2f : tempValue;
-
-        _spawnDelay = _defaultDelay - 0.8f * (float)(_scoreCounter.Score / 100f - Math.Truncate(_scoreCounter.Score / 100f));
-    }
-    
     public void GetRandomPositions(out Vector3 startPosition, out Vector3 endPosition)
     {
         var randomIndex = Random.Range(0, 4);
@@ -108,6 +92,22 @@ public class EnemySpawner : ObjectPool<Enemy>, ISpawner
     {
         _canSpawn = false;
     }
+
+    private void OnEnemyMovingEnd(Shot enemy)
+    {
+        _scoreCounter.AddScore();
+        enemy.OnMovingEnd -= OnEnemyMovingEnd;
+    }
+
+    private void IncreaseDifficult()
+    {
+        var tempValue = _defaultMoveDuration - 0.4f * (_scoreCounter.Score / 100);
+        
+        _moveDuration = tempValue <= 0 ? 0.2f : tempValue;
+
+        _spawnDelay = _defaultDelay - 0.8f * (float)(_scoreCounter.Score / 100f - Math.Truncate(_scoreCounter.Score / 100f));
+    }
+    
 }
 
 

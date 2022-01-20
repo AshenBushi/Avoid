@@ -14,11 +14,12 @@ public class BonusFreezing : Bonus
 
     private async void EffectTask()
     {
-        _player.PlayEffectAnimation(TypeEffectAnimation.freezing);
+        _player.PlayEffectAnimation(TypeEffect.freezing);
         _player.DisallowMove();
 
         await Task.Delay(TimeSpan.FromSeconds(3));
 
+        _player.StopEffectAnimation(TypeEffect.freezing);
         _player.AllowMove();
         _player.AllowUsingBonus();
     }
