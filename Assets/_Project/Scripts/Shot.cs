@@ -10,7 +10,8 @@ public abstract class Shot : MonoBehaviour
     private Vector3 _startPosition;
     private Vector3 _endPosition;
     private float _moveDuration;
-    
+    private float _moverTimeScaleDefault;
+
     protected Tween Mover;
 
     public event UnityAction<Shot> OnMovingEnd;
@@ -27,8 +28,20 @@ public abstract class Shot : MonoBehaviour
         _moveDuration = moveDuration;
 
         gameObject.SetActive(true);
-        
+
         Move();
+    }
+
+    public void SetSpeedUp()
+    {
+        Mover.timeScale = _moverTimeScaleDefault;
+        Mover.timeScale *= 1.2f;
+    }
+
+    public void SetSpeedDown()
+    {
+        Mover.timeScale = _moverTimeScaleDefault;
+        Mover.timeScale /= 1.5f;
     }
 
     protected abstract void OnTriggerEnter2D(Collider2D other);
@@ -36,13 +49,14 @@ public abstract class Shot : MonoBehaviour
     private void Move()
     {
         _transform.localPosition = _startPosition;
-        
+
         Mover = _transform.DOLocalMove(_endPosition, _moveDuration).SetEase(Ease.Linear).SetLink(gameObject);
+        _moverTimeScaleDefault = Mover.timeScale;
 
         Mover.OnComplete(() =>
         {
             OnMovingEnd?.Invoke(this);
-            
+
             gameObject.SetActive(false);
         });
     }

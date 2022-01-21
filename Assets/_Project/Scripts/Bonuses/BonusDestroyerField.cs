@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class BonusDestroyerField : MonoBehaviour
+public class BonusDestroyerField : BonusField
 {
     private Player _player;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerStay2D(Collider2D collision)
     {
         if (!collision.TryGetComponent(out Enemy enemy)) return;
 
@@ -16,15 +16,5 @@ public class BonusDestroyerField : MonoBehaviour
     public void Init(Player player)
     {
         _player = player;
-    }
-
-    public void Show()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public void Hide()
-    {
-        Destroy(gameObject);
     }
 }

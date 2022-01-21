@@ -5,7 +5,7 @@ using UnityEngine;
 public class BonusInvulnerable : Bonus
 {
     [SerializeField] private int _timeSeconds = 3;
-    [SerializeField] private bool _isDontEnemyBonus = true;
+    [SerializeField] private bool _isDontEnemyBonus;
 
     protected override void UseBonus()
     {
