@@ -35,7 +35,7 @@ public abstract class Shot : MonoBehaviour
     public void SetSpeedUp()
     {
         Mover.timeScale = _moverTimeScaleDefault;
-        Mover.timeScale *= 1.2f;
+        Mover.timeScale *= 1.4f;
     }
 
     public void SetSpeedDown()
@@ -55,9 +55,14 @@ public abstract class Shot : MonoBehaviour
 
         Mover.OnComplete(() =>
         {
-            OnMovingEnd?.Invoke(this);
+            MovingEnd();
 
             gameObject.SetActive(false);
         });
+    }
+
+    protected void MovingEnd()
+    {
+        OnMovingEnd?.Invoke(this);
     }
 }

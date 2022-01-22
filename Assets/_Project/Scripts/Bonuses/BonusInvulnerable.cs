@@ -10,7 +10,7 @@ public class BonusInvulnerable : Bonus
     protected override void UseBonus()
     {
         if (_player == null) return;
-
+         
         if (!_isDontEnemyBonus)
         {
             EffectTask();

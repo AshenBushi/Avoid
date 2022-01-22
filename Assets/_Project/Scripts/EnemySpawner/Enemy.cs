@@ -22,6 +22,7 @@ public class Enemy : Shot
     public void Die()
     {
         Mover.Kill();
+        MovingEnd();
         gameObject.SetActive(false);
     }
 }

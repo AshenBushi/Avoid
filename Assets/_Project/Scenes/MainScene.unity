@@ -245,8 +245,8 @@ MonoBehaviour:
   _bottomSide:
     _firstPoint: {x: -500, y: -510, z: 0}
     _lastPoint: {x: 500, y: -510, z: 0}
-  _defaultDelay: 1000
-  _defaultMoveDuration: 4
+  _defaultDelay: 4
+  _defaultMoveDuration: 5
 --- !u!1 &88003047
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,8 +371,8 @@ MonoBehaviour:
   _bottomSide:
     _firstPoint: {x: -500, y: -510, z: 0}
     _lastPoint: {x: 500, y: -510, z: 0}
-  _defaultDelay: 3
-  _defaultMoveDuration: 4
+  _defaultDelay: 7
+  _defaultMoveDuration: 5
 --- !u!1 &100974429
 GameObject:
   m_ObjectHideFlags: 0
@@ -2179,8 +2179,8 @@ MonoBehaviour:
   _bottomSide:
     _firstPoint: {x: -500, y: -510, z: 0}
     _lastPoint: {x: 500, y: -510, z: 0}
-  _defaultDelay: 1000
-  _defaultMoveDuration: 4
+  _defaultDelay: 6
+  _defaultMoveDuration: 5
 --- !u!1 &731365278
 GameObject:
   m_ObjectHideFlags: 0
@@ -3048,8 +3048,8 @@ MonoBehaviour:
   _bottomSide:
     _firstPoint: {x: -500, y: -510, z: 0}
     _lastPoint: {x: 500, y: -510, z: 0}
-  _defaultDelay: 1000
-  _defaultMoveDuration: 4
+  _defaultDelay: 5
+  _defaultMoveDuration: 5
 --- !u!1 &1238626818
 GameObject:
   m_ObjectHideFlags: 0
@@ -5193,8 +5193,8 @@ MonoBehaviour:
   _bottomSide:
     _firstPoint: {x: -500, y: -510, z: 0}
     _lastPoint: {x: 500, y: -510, z: 0}
-  _defaultDelay: 3
-  _defaultMoveDuration: 4
+  _defaultDelay: 8
+  _defaultMoveDuration: 5
 --- !u!1 &2066293703
 GameObject:
   m_ObjectHideFlags: 0

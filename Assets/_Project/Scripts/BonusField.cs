@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class BonusField : MonoBehaviour
 {
     protected float _seconds = 0f;
+    protected Player _player;
 
     private float _time = 0f;
     private bool _isTimerOn = false;
@@ -13,6 +14,11 @@ public abstract class BonusField : MonoBehaviour
             SetTimer();
     }
 
+    public virtual void Init(Player player)
+    {
+        _player = player;
+    }
+
     public virtual void Show()
     {
         gameObject.SetActive(true);
@@ -20,6 +26,7 @@ public abstract class BonusField : MonoBehaviour
 
     public virtual void Hide()
     {
+        _player.AllowUsingBonus();
         Destroy(gameObject);
     }
 
