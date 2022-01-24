@@ -1,23 +1,21 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class ObjectPool<T> : MonoBehaviour where T: Component
 {
-    [SerializeField] private int _poolCount;
-    [SerializeField] private T _template;
-    [SerializeField] private Transform _container;
+    [SerializeField] protected int _poolCount;
+    [SerializeField] protected T _template;
+    [SerializeField] protected Transform _container;
 
-    private List<T> _pool = new List<T>();
+    protected List<T> _pool = new List<T>();
 
     private void Awake()
     {
         Init();
     }
 
-    private void Init()
+    protected virtual void Init()
     {
         for (var i = 0; i < _poolCount; i++)
         {

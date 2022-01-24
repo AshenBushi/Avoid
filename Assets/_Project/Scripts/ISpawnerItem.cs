@@ -1,0 +1,4 @@
+﻿public interface ISpawnerItem: ISpawner
+{
+
+}

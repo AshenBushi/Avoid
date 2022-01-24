@@ -1,0 +1,113 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class SpawnerItem : ObjectPool<Shot>, ISpawner
+{
+    [SerializeField] protected List<Shot> _itemTemplates = new List<Shot>();
+    [Space(20f)]
+    [SerializeField] protected SideRange _leftSide;
+    [SerializeField] protected SideRange _rightSide;
+    [SerializeField] protected SideRange _topSide;
+    [SerializeField] protected SideRange _bottomSide;
+    [Space(10f)]
+    [Header("Spawn Parameters")]
+    [SerializeField] protected float _defaultDelay;
+    [SerializeField] protected float _defaultMoveDuration;
+
+    protected float _timer = 0f;
+    protected float _spawnDelay;
+    protected float _moveDuration;
+    protected bool _canSpawn;
+
+    public bool IsSpawned { get; private set; }
+
+    protected virtual void Start()
+    {
+        _spawnDelay = _defaultDelay;
+        _moveDuration = _defaultMoveDuration;
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        if (!_canSpawn) return;
+
+        _timer += Time.fixedDeltaTime;
+
+        if (_timer >= _spawnDelay)
+        {
+            Spawn();
+            _timer = 0;
+        }
+    }
+
+    protected override void Init()
+    {
+        for (var i = 0; i < _poolCount; i++)
+        {
+            for (int j = 0; j < _itemTemplates.Count; j++)
+            {
+                _pool.Add(Instantiate(_itemTemplates[j], _container));
+                _pool[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public virtual void GetRandomPositions(out Vector3 startPosition, out Vector3 endPosition)
+    {
+        var randomIndex = Random.Range(0, 4);
+
+        switch (randomIndex)
+        {
+            case 0:
+                startPosition = _leftSide.GetRandomPoint();
+                endPosition = _rightSide.GetRandomPoint();
+                break;
+            case 1:
+                startPosition = _rightSide.GetRandomPoint();
+                endPosition = _leftSide.GetRandomPoint();
+                break;
+            case 2:
+                startPosition = _topSide.GetRandomPoint();
+                endPosition = _bottomSide.GetRandomPoint();
+                break;
+            case 3:
+                startPosition = _bottomSide.GetRandomPoint();
+                endPosition = _topSide.GetRandomPoint();
+                break;
+            default:
+                startPosition = _leftSide.GetRandomPoint();
+                endPosition = _rightSide.GetRandomPoint();
+                break;
+        }
+    }
+
+    public virtual void Spawn()
+    {
+        //var randomCanSpawn = Random.Range(1, 101);
+
+        //if (randomCanSpawn <= 20) return;
+
+        GetRandomPositions(out var startPosition, out var endPosition);
+
+        List<Shot> listDisableItems = new List<Shot>();
+
+        for (int i = 0; i < _pool.Count; i++)
+        {
+            if (_pool[i].gameObject.activeSelf) continue;
+
+            listDisableItems.Add(_pool[i]);
+        }
+
+        listDisableItems[Random.Range(0, listDisableItems.Count)].Init(startPosition, endPosition, _moveDuration);
+    }
+
+    public virtual void StartSpawning()
+    {
+        _canSpawn = true;
+    }
+
+    public virtual void EndSpawning()
+    {
+        _canSpawn = false;
+    }
+}
