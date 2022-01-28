@@ -115,6 +115,8 @@ public class Player : MonoBehaviour
         {
             Heal();
         }
+
+        SetMaxSize();
     }
 
     private void Die()
@@ -142,6 +144,16 @@ public class Player : MonoBehaviour
         var scale = _rectTransform.localScale;
 
         if (scale.x < _standartScale.x && scale.y < _standartScale.y)
+            scale = new Vector3(scale.x + 0.2f, scale.y + 0.2f);
+
+        _rectTransform.DOScale(scale, 0.3f).SetLink(gameObject);
+    }
+
+    private void SetMaxSize()
+    {
+        var scale = _rectTransform.localScale;
+
+        while (scale.x < _standartScale.x && scale.y < _standartScale.y)
             scale = new Vector3(scale.x + 0.2f, scale.y + 0.2f);
 
         _rectTransform.DOScale(scale, 0.3f).SetLink(gameObject);
