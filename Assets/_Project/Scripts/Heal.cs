@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class Heal : Shot
+public class Heal : Bonus
 {
     protected override void OnTriggerEnter2D(Collider2D other)
     {
@@ -12,5 +12,10 @@ public class Heal : Shot
         player.Heal();
         Mover.Kill();
         gameObject.SetActive(false);
+    }
+
+    protected override void UseBonus()
+    {
+        
     }
 }

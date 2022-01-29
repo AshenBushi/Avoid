@@ -115,4 +115,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75adbe8e69e947e4bb95901bff8cb9c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _acceleratingFieldTemplate: {fileID: 5640408916164944389, guid: 2b81f8d64a4a2ec4e825d6e42a6aa421, type: 3}

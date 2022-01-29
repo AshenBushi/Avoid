@@ -2,24 +2,25 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class Shot : MonoBehaviour
+public abstract class Item : MonoBehaviour
 {
     private RectTransform _transform;
     private Vector3 _startPosition;
     private Vector3 _endPosition;
     private float _moveDuration;
     private float _moverTimeScaleDefault;
+    protected int _damage;
 
     protected Tween Mover;
 
-    public event UnityAction<Shot> OnMovingEnd;
+    public event UnityAction<Item> OnMovingEnd;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _transform = GetComponent<RectTransform>();
     }
 
-    public void Init(Vector3 startPosition, Vector3 endPosition, float moveDuration)
+    public virtual void Init(Vector3 startPosition, Vector3 endPosition, float moveDuration)
     {
         _startPosition = startPosition;
         _endPosition = endPosition;
@@ -30,21 +31,35 @@ public abstract class Shot : MonoBehaviour
         Move();
     }
 
-    public void SetSpeedUp()
+    public virtual void SetSpeedUp()
     {
         Mover.timeScale = _moverTimeScaleDefault;
         Mover.timeScale *= 1.4f;
     }
 
-    public void SetSpeedDown()
+    public virtual void SetSpeedDown()
     {
         Mover.timeScale = _moverTimeScaleDefault;
         Mover.timeScale /= 1.5f;
     }
 
+    public virtual void SetDamageDone(int damage)
+    {
+        _damage = damage;
+    }
+
+    public virtual void Deactivation()
+    {
+        if (!gameObject.activeSelf) return;
+
+        Mover.Kill();
+        MovingEnd();
+        gameObject.SetActive(false);
+    }
+
     protected abstract void OnTriggerEnter2D(Collider2D other);
 
-    private void Move()
+    protected virtual void Move()
     {
         _transform.localPosition = _startPosition;
 
@@ -59,7 +74,7 @@ public abstract class Shot : MonoBehaviour
         });
     }
 
-    protected void MovingEnd()
+    protected virtual void MovingEnd()
     {
         OnMovingEnd?.Invoke(this);
     }

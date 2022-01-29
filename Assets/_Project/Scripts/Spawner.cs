@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SpawnerItem : ObjectPool<Shot>, ISpawner
+public class Spawner : ObjectPool<Item>, ISpawner
 {
-    [SerializeField] protected List<Shot> _itemTemplates = new List<Shot>();
+    [SerializeField] protected List<Item> _itemTemplates = new List<Item>();
     [Space(20f)]
     [SerializeField] protected SideRange _leftSide;
     [SerializeField] protected SideRange _rightSide;
@@ -17,7 +17,7 @@ public abstract class SpawnerItem : ObjectPool<Shot>, ISpawner
     protected float _timer = 0f;
     protected float _spawnDelay;
     protected float _moveDuration;
-    protected bool _canSpawn;
+    protected bool _canSpawn = false;
 
     public bool IsSpawned { get; private set; }
 
@@ -40,7 +40,7 @@ public abstract class SpawnerItem : ObjectPool<Shot>, ISpawner
         }
     }
 
-    protected override void Init()
+    protected override void InitPool()
     {
         for (var i = 0; i < _poolCount; i++)
         {
@@ -83,13 +83,9 @@ public abstract class SpawnerItem : ObjectPool<Shot>, ISpawner
 
     public virtual void Spawn()
     {
-        //var randomCanSpawn = Random.Range(1, 101);
-
-        //if (randomCanSpawn <= 20) return;
-
         GetRandomPositions(out var startPosition, out var endPosition);
 
-        List<Shot> listDisableItems = new List<Shot>();
+        List<Item> listDisableItems = new List<Item>();
 
         for (int i = 0; i < _pool.Count; i++)
         {

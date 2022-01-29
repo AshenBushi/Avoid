@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BonusDestroyer : Bonus
 {
-    [SerializeField] private BonusDestroyerField _destroyerFieldTemplate;
+    [SerializeField] private float _time = 0f;
 
     protected override void UseBonus()
     {
@@ -11,8 +11,6 @@ public class BonusDestroyer : Bonus
 
         _player.DisallowUsingBonus();
 
-        var field = Instantiate(_destroyerFieldTemplate, _player.transform.parent);
-        field.Init(_player);
-        field.Show();
+        SpawnersManager.Instance.SpawnerEnemy.SetStateEnemy(_player, StateEnemy.destroying, _time);
     }
 }

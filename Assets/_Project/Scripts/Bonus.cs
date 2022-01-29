@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public abstract class Bonus : Shot
+public abstract class Bonus : Item
 {
     protected Player _player;
 
@@ -10,7 +10,7 @@ public abstract class Bonus : Shot
         
     }
 
-    protected void OnTriggerStay2D(Collider2D collision)
+    protected virtual void OnTriggerStay2D(Collider2D collision)
     {
         if (!collision.TryGetComponent(out Player player)) return;
         if (player.IsUsingBonus) return;

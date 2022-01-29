@@ -1,24 +1,20 @@
-using System;
 using System.Collections.Generic;
-
 
 public class SpawnersManager : Singleton<SpawnersManager>
 {
-    public EnemySpawner EnemySpawner { get; private set; }
-    public List<ISpawnerItem> ItemSpawners { get; set; } = new List<ISpawnerItem>();
+    public IStateEnemy SpawnerEnemy { get; private set; }
+    public List<ISpawner> ItemSpawners { get; set; } = new List<ISpawner>();
 
     protected override void Awake()
     {
         base.Awake();
 
-        EnemySpawner = GetComponentInChildren<EnemySpawner>();
-        ItemSpawners.AddRange(GetComponentsInChildren<ISpawnerItem>());
+        SpawnerEnemy = GetComponentInChildren<IStateEnemy>();
+        ItemSpawners.AddRange(GetComponentsInChildren<ISpawner>());
     }
 
     public void StartSpawning()
     {
-        EnemySpawner.StartSpawning();
-
         for (int i = 0; i < ItemSpawners.Count; i++)
         {
             ItemSpawners[i].StartSpawning();
@@ -27,8 +23,6 @@ public class SpawnersManager : Singleton<SpawnersManager>
 
     public void EndSpawning()
     {
-        EnemySpawner.EndSpawning();
-
         for (int i = 0; i < ItemSpawners.Count; i++)
         {
             ItemSpawners[i].EndSpawning();

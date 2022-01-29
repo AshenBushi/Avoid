@@ -6,7 +6,7 @@ public class BonusDestroyerField : BonusField
     {
         if (!collision.TryGetComponent(out Enemy enemy)) return;
 
-        enemy.Die();
+        enemy.Deactivation();
         Hide();
     }
 }

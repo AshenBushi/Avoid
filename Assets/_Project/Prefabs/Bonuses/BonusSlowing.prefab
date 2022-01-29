@@ -115,4 +115,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad45072029032f946b31b63b79f6a52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slowingFieldTemplate: {fileID: 6704244799671383601, guid: 8da6c04af0473134d8ca47dcb22fc9cf, type: 3}

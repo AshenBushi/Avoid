@@ -115,5 +115,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0cd8d6e2ba2ffc4bb822747f47fba6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeSeconds: 3
-  _isDontEnemyBonus: 0
+  _time: 3
+  _isPlayerEffect: 0

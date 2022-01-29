@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BonusAccelerating : Bonus
 {
-    [SerializeField] private BonusAcceleratingField _acceleratingFieldTemplate;
+    [SerializeField] private float _time = 3f;
 
     protected override void UseBonus()
     {
@@ -11,9 +11,6 @@ public class BonusAccelerating : Bonus
 
         _player.DisallowUsingBonus();
 
-        var field = Instantiate(_acceleratingFieldTemplate, _player.transform.parent);
-        field.Init(_player);
-        field.Show();
-        field.SetTimeSeconds(3f);
+        SpawnersManager.Instance.SpawnerEnemy.SetStateEnemy(_player, StateEnemy.acceleration, _time);
     }
 }

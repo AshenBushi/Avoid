@@ -1,4 +1,6 @@
 using DG.Tweening;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -81,6 +83,8 @@ public class Player : MonoBehaviour
     {
         if (!_isCanTakingDamage) return;
 
+        EffectInvulnerableTask();
+
         SoundManager.Instance.PlaySound(Sound.TakeDamage);
 
         VibrationManager.Instance.PlayVibration();
@@ -157,5 +161,16 @@ public class Player : MonoBehaviour
             scale = new Vector3(scale.x + 0.2f, scale.y + 0.2f);
 
         _rectTransform.DOScale(scale, 0.3f).SetLink(gameObject);
+    }
+
+    private async void EffectInvulnerableTask()
+    {
+        PlayEffectAnimation(TypeEffect.invulnerable);
+        DisallowTakingDamage();
+
+        await Task.Delay(TimeSpan.FromSeconds(1));
+
+        StopEffectAnimation(TypeEffect.invulnerable);
+        AllowTakingDamage();
     }
 }

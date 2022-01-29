@@ -12,10 +12,10 @@ public class ObjectPool<T> : MonoBehaviour where T: Component
 
     private void Awake()
     {
-        Init();
+        InitPool();
     }
 
-    protected virtual void Init()
+    protected virtual void InitPool()
     {
         for (var i = 0; i < _poolCount; i++)
         {
