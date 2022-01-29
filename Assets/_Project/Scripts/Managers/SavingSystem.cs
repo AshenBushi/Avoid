@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -60,6 +58,7 @@ public class Data
     public int BestScore;
     public int DeathCount;
     public Color GameColor;
+    public string GameColorName;
 
     public Data()
     {
@@ -67,5 +66,6 @@ public class Data
         BestScore = 0;
         DeathCount = 0;
         GameColor = Color.green;
+        GameColorName = "Green";
     }
 }

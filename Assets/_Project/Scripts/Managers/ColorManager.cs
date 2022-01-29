@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -14,8 +11,9 @@ public class ColorManager : Singleton<ColorManager>
     public void ChangeColor(Image image)
     {
         SavingSystem.Instance.Data.GameColor = image.color;
+        SavingSystem.Instance.Data.GameColorName = image.gameObject.name;
         SavingSystem.Instance.Save();
-        
+
         OnColorChanged?.Invoke();
     }
 }

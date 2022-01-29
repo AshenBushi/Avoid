@@ -1,3 +1,4 @@
+using Firebase.Analytics;
 using System;
 using TMPro;
 using UnityEngine;
@@ -26,7 +27,7 @@ public class GameOverScreen : UIScreen
     {
         Debug.Log("Rewarded Worked");
 
-        AdManager.Instance.RewardedAd.OnAdClosed -= OnAdClosedInterstitial;
+        AdManager.Instance.RewardedAd.OnAdClosed -= OnAdClosedRewarded;
 
         Hide();
     }
@@ -49,6 +50,8 @@ public class GameOverScreen : UIScreen
         }
 
         _bestScore.text = SavingSystem.Instance.Data.BestScore.ToString();
+
+        FirebaseAnalytics.LogEvent("session_end_(" + _score + ")");
     }
 
     public override void Hide()
@@ -82,5 +85,7 @@ public class GameOverScreen : UIScreen
         AdManager.Instance.RewardedAd.OnAdClosed += OnAdClosedRewarded;
         AdManager.Instance.ShowRewardVideo();
         _isGameContinue = true;
+
+        FirebaseAnalytics.LogEvent("ad_continue");
     }
 }

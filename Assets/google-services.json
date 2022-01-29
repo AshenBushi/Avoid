@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "104881602585",
+    "project_id": "don-t-stumble",
+    "storage_bucket": "don-t-stumble.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104881602585:android:913f0f985c2f34c8106a88",
+        "android_client_info": {
+          "package_name": "com.EIVAGames.Dontstumble"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "104881602585-earnrslri2lk1880kuca66elpflk8d2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK2vn5bwNif7BFnyzmLG42RQRBZ8bptxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "104881602585-earnrslri2lk1880kuca66elpflk8d2s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
