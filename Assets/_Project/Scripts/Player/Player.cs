@@ -65,18 +65,18 @@ public class Player : MonoBehaviour
         _isUsingBonus = true;
     }
 
-    public void PlayEffectAnimation(TypeEffect typeAnimation)
+    public void PlayEffectAnimation(BonusType bonusTypeAnimation)
     {
         if (_effectSetters == null) return;
 
-        _effectSetters.Play(typeAnimation);
+        _effectSetters.Play(bonusTypeAnimation);
     }
 
-    public void StopEffectAnimation(TypeEffect typeAnimation)
+    public void StopEffectAnimation(BonusType bonusTypeAnimation)
     {
         if (_effectSetters == null) return;
 
-        _effectSetters.Stop(typeAnimation);
+        _effectSetters.Stop(bonusTypeAnimation);
     }
 
     public void TakeDamage(int damage)
@@ -165,12 +165,12 @@ public class Player : MonoBehaviour
 
     private async void EffectInvulnerableTask()
     {
-        PlayEffectAnimation(TypeEffect.invulnerable);
+        PlayEffectAnimation(BonusType.Invulnerable);
         DisallowTakingDamage();
 
         await Task.Delay(TimeSpan.FromSeconds(1));
 
-        StopEffectAnimation(TypeEffect.invulnerable);
+        StopEffectAnimation(BonusType.Invulnerable);
         AllowTakingDamage();
     }
 }

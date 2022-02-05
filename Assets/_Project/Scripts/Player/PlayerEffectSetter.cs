@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public enum TypeEffect
+public enum BonusType
 {
-    invulnerable,
-    freezing,
-    slowing,
-    accelerating,
-    destroying
+    Invulnerable,
+    Freezing,
+    Slowing,
+    Accelerating,
+    Destroying
 }
 
 public class PlayerEffectSetter : MonoBehaviour
@@ -17,35 +18,32 @@ public class PlayerEffectSetter : MonoBehaviour
     private void Awake()
     {
         _effects.AddRange(GetComponentsInChildren<PlayerEffect>());
-        for (int i = 0; i < _effects.Count; i++)
+        
+        for (var i = 0; i < _effects.Count; i++)
         {
             _effects[i].Hide();
         }
     }
 
-    public void Play(TypeEffect typeAnimation)
+    public void Play(BonusType bonusTypeAnimation)
     {
-        ActivationEffect(true, typeAnimation);
+        ActivationEffect(true, bonusTypeAnimation);
     }
 
-    public void Stop(TypeEffect typeAnimation)
+    public void Stop(BonusType bonusTypeAnimation)
     {
-        ActivationEffect(false, typeAnimation);
+        ActivationEffect(false, bonusTypeAnimation);
     }
 
-    private void ActivationEffect(bool isPlay, TypeEffect type)
+    private void ActivationEffect(bool isPlay, BonusType bonusType)
     {
-        for (int i = 0; i < _effects.Count; i++)
+        foreach (var effect in _effects.Where(effect => effect.BonusType == bonusType))
         {
-            if (_effects[i].Type == type)
-            {
-                if (isPlay)
-                    _effects[i].Show();
-                else
-                    _effects[i].Hide();
-
-                break;
-            }
+            if (isPlay)
+                effect.Show();
+            else
+                effect.Hide();
+            break;
         }
     }
 }

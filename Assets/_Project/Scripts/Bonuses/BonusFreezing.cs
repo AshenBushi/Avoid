@@ -14,13 +14,19 @@ public class BonusFreezing : Bonus
 
     private async void EffectTask()
     {
-        _player.PlayEffectAnimation(TypeEffect.freezing);
+        _player.PlayEffectAnimation(BonusType.Freezing);
         _player.DisallowMove();
+        
+        SoundManager.Instance.PlaySound(Sound.TakeDamage);
+        
+        UIManager.Instance.GameScreen.BonusDisplay.ShowBonusIcon(BonusType.Freezing);
 
         await Task.Delay(TimeSpan.FromSeconds(3));
 
-        _player.StopEffectAnimation(TypeEffect.freezing);
+        _player.StopEffectAnimation(BonusType.Freezing);
         _player.AllowMove();
         _player.AllowUsingBonus();
+        
+        UIManager.Instance.GameScreen.BonusDisplay.Clear();
     }
 }

@@ -9,7 +9,7 @@ public class BonusAccelerating : Bonus
         if (_player == null) return;
         if (_player.IsUsingBonus) return;
 
-        _player.DisallowUsingBonus();
+        SoundManager.Instance.PlaySound(Sound.TakeDamage);
 
         SpawnersManager.Instance.SpawnerEnemy.SetStateEnemy(_player, StateEnemy.acceleration, _time);
     }

@@ -3,16 +3,16 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerEffect : MonoBehaviour
 {
-    [SerializeField] private TypeEffect _type;
+    [SerializeField] private BonusType _bonusType;
     private Player _player;
     private Animator _animator;
     private BonusInvulnerable _bonusInvulnerable;
 
-    public TypeEffect Type => _type;
+    public BonusType BonusType => _bonusType;
 
     private void Awake()
     {
-        if (_type == TypeEffect.invulnerable)
+        if (_bonusType == BonusType.Invulnerable)
             _bonusInvulnerable = GetComponent<BonusInvulnerable>();
 
         _player = GetComponentInParent<Player>();
