@@ -19,12 +19,13 @@ public class Spawner : ObjectPool<Item>, ISpawner
     protected float _moveDuration;
     protected bool _canSpawn = false;
 
-    public bool IsSpawned { get; private set; }
-
     protected virtual void Start()
     {
         _spawnDelay = _defaultDelay;
         _moveDuration = _defaultMoveDuration;
+
+        ScoreCounter.OnMazeActivationEvent.AddListener(EndSpawning);
+        MazeMovingController.MazeCompleteEvent.AddListener(StartSpawning);
     }
 
     protected virtual void FixedUpdate()

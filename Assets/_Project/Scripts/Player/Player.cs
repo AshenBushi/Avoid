@@ -129,6 +129,8 @@ public class Player : MonoBehaviour
         UIManager.Instance.GameScreen.Hide();
 
         SpawnersManager.Instance.EndSpawning();
+
+        MazeMovingController.MazeDestroyEvent?.Invoke();
     }
 
     private void ReduceSize()
