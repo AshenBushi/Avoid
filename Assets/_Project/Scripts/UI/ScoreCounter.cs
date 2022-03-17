@@ -9,6 +9,7 @@ public class ScoreCounter : MonoBehaviour
     [SerializeField] private TMP_Text _textWaveNumber;
     private TMP_Text _text;
     private Tween _tween;
+    private bool _isMazeCreated;
 
     public int Score { get; private set; } = 0;
 
@@ -36,15 +37,17 @@ public class ScoreCounter : MonoBehaviour
 
         _text.text = Score.ToString();
 
-        if (Score % 100 == 0 && Score != 0)
+        if (Score % 10 == 0 && Score != 0 && !_isMazeCreated)
         {
+            _isMazeCreated = true;
             OnMazeActivationEvent?.Invoke();
         }
     }
 
     private void SetWaveNumber()
     {
-        _textWaveNumber.text = "Wave " + ((Score % 100) + 1);
+        _isMazeCreated = false;
+        _textWaveNumber.text = "Wave " + ((Score % 10) + 1);
         _tween = _textWaveNumber.DOFade(1f, 0.5f).SetLink(gameObject);
 
         _tween.OnComplete(() =>

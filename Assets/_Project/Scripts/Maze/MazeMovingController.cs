@@ -8,7 +8,7 @@ public class MazeMovingController : MonoBehaviour
     [SerializeField] private float _mazeEndPoint = -1f;
     [SerializeField] private float _durationMovingMaze = 10f;
 
-    private MazeSpawner _mazeSpawner;
+    private MazeSpawnerCells _mazeSpawner;
     private Tween _tween;
 
     public static UnityEvent MazeCompleteEvent = new UnityEvent();
@@ -16,7 +16,7 @@ public class MazeMovingController : MonoBehaviour
 
     private void Awake()
     {
-        _mazeSpawner = GetComponentInChildren<MazeSpawner>();
+        _mazeSpawner = GetComponentInChildren<MazeSpawnerCells>();
         ScoreCounter.OnMazeActivationEvent.AddListener(Spawn);
     }
 
@@ -24,7 +24,7 @@ public class MazeMovingController : MonoBehaviour
     {
         MazeDestroyEvent.AddListener(Clear);
 
-        _mazeSpawner.Spawn();
+        _mazeSpawner.SpawnCells();
 
         transform.position = new Vector3(transform.position.x, _mazeStartPoint, transform.position.z);
         _tween = transform.DOMoveY(_mazeEndPoint, _durationMovingMaze).SetLink(gameObject).SetEase(Ease.Linear);
@@ -38,9 +38,13 @@ public class MazeMovingController : MonoBehaviour
 
     private void Clear()
     {
-        MazeDestroyEvent.RemoveListener(Clear);
+        _tween.OnKill(() =>
+        {
+            MazeDestroyEvent.RemoveListener(Clear);
+            _mazeSpawner.Clear();
+            transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+        });
+        
         _tween.Kill();
-        _mazeSpawner.Clear();
-        transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
     }
 }
