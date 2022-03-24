@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class PauseScreen : UIScreen
 {
-    public override void Show()
+    public override void Enable()
     {
-        base.Show();
+        base.Enable();
 
         SoundManager.Instance.PlaySound(Sound.Button);
         
         Time.timeScale = 0f;
     }
 
-    public override void Hide()
+    public override void Disable()
     {
-        base.Hide();
+        base.Disable();
 
         SoundManager.Instance.PlaySound(Sound.Button);
         

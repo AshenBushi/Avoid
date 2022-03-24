@@ -29,12 +29,12 @@ public class GameOverScreen : UIScreen
 
         AdManager.Instance.RewardedAd.OnAdClosed -= OnAdClosedRewarded;
 
-        Hide();
+        Disable();
     }
 
-    public override void Show()
+    public override void Enable()
     {
-        base.Show();
+        base.Enable();
 
         if (_isGameContinue)
             _continueButton.gameObject.SetActive(false);
@@ -54,11 +54,11 @@ public class GameOverScreen : UIScreen
         FirebaseAnalytics.LogEvent("session_end_(" + _score + ")");
     }
 
-    public override void Hide()
+    public override void Disable()
     {
-        base.Hide();
+        base.Disable();
 
-        UIManager.Instance.GameScreen.Show();
+        UIManager.Instance.GameScreen.Enable();
         SpawnersManager.Instance.StartSpawning();
 
         _player.MaxHeal();

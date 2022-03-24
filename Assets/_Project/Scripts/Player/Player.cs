@@ -125,8 +125,8 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        UIManager.Instance.GameOverScreen.Show();
-        UIManager.Instance.GameScreen.Hide();
+        UIManager.Instance.GameOverScreen.Enable();
+        UIManager.Instance.GameScreen.Disable();
 
         SpawnersManager.Instance.EndSpawning();
 

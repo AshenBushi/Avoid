@@ -1,13 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class SavingSystem : Singleton<SavingSystem>
 {
     private string _path;
-    
+
     public Data Data;
-    
+
     protected override void Awake()
     {
         MakeGlobal();
@@ -57,8 +58,14 @@ public class Data
     public bool VolumeState;
     public int BestScore;
     public int DeathCount;
+    public int Money;
     public Color GameColor;
     public string GameColorName;
+    public ShopData Shop;
+    public int CurSelectedCharacterIndex;
+    public int CurSelectedCharacterColorIndex;
+    public int CurSelectedGameColorIndex;
+    public int CurSelectedBackgroundIndex;
 
     public Data()
     {
@@ -67,5 +74,40 @@ public class Data
         DeathCount = 0;
         GameColor = Color.green;
         GameColorName = "Green";
+        Money = 0;
+
+        CurSelectedCharacterIndex = 0;
+        CurSelectedCharacterColorIndex = 0;
+        CurSelectedGameColorIndex = 0;
+        CurSelectedBackgroundIndex = 0;
+
+        Shop.OpenedCharacters = new List<int>()
+        {
+            0
+        };
+
+        Shop.OpenedCharacterColors = new List<int>()
+        {
+            0
+        };
+
+        Shop.OpenedGameColors = new List<int>()
+        {
+            0
+        };
+
+        Shop.OpenedBackgrounds = new List<int>()
+        {
+            0
+        };
     }
+}
+
+[Serializable]
+public struct ShopData
+{
+    public List<int> OpenedCharacters;
+    public List<int> OpenedCharacterColors;
+    public List<int> OpenedGameColors;
+    public List<int> OpenedBackgrounds;
 }

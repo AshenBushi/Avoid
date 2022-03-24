@@ -6,9 +6,9 @@ public class StartScreen : UIScreen
     {
         SoundManager.Instance.PlaySound(Sound.Button);
 
-        Hide();
+        Disable();
 
-        UIManager.Instance.GameScreen.Show();
+        UIManager.Instance.GameScreen.Enable();
 
         SpawnersManager.Instance.StartSpawning();
 
