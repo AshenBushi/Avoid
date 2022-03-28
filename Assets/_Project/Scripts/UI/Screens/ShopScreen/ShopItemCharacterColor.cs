@@ -1,4 +1,4 @@
-public class ShopItemCharacterColor : ShopSectionContentItem
+public class ShopItemCharacterColor : ShopItem
 {
     public override bool TryBuy()
     {

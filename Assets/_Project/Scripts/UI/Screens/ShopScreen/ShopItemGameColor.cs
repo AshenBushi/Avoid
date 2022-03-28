@@ -1,4 +1,4 @@
-public class ShopItemGameColor : ShopSectionContentItem
+public class ShopItemGameColor : ShopItem
 {
     public override bool TryBuy()
     {
@@ -16,6 +16,7 @@ public class ShopItemGameColor : ShopSectionContentItem
 
     public override void TrySelect()
     {
+        ColorManager.Instance.ChangeColor(_icon);
         SavingSystem.Instance.Data.CurSelectedGameColorIndex = _index;
         SavingSystem.Instance.Save();
     }

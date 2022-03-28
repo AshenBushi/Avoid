@@ -7,7 +7,7 @@ using UnityEngine;
 public class ShopNavigation : MonoBehaviour
 {
     private int _currentPage = 0;
-    private List<ShopPage> _pages = new List<ShopPage>();
+    private List<ShopTab> _pages = new List<ShopTab>();
     private List<ShopNavigationTab> _shopTab = new List<ShopNavigationTab>();
 
     public static Action<int> OnSelectTab;
@@ -25,7 +25,7 @@ public class ShopNavigation : MonoBehaviour
     private IEnumerator GetComponentsRoutine()
     {
         _shopTab = GetComponentsInChildren<ShopNavigationTab>().ToList();
-        _pages = transform.parent.GetComponentsInChildren<ShopPage>().ToList();
+        _pages = transform.parent.GetComponentsInChildren<ShopTab>().ToList();
         yield return null;
 
         for (int i = 0; i < _shopTab.Count; i++)

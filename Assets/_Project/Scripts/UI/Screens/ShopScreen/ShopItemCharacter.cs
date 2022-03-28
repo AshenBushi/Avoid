@@ -1,4 +1,4 @@
-﻿public class ShopItemCharacter : ShopSectionContentItem
+﻿public class ShopItemCharacter : ShopItem
 {
     public override bool TryBuy()
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ShopPage : MonoBehaviour
+public class ShopTab : MonoBehaviour
 {
     private int _index;
 

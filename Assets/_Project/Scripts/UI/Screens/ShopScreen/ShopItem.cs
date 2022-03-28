@@ -2,10 +2,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ShopSectionContentItem : MonoBehaviour, IShopItem
+public abstract class ShopItem : MonoBehaviour, IShopItem
 {
     [SerializeField] protected Image _icon;
-    [SerializeField] protected TMP_Text _textPrice;
+    //[SerializeField] protected TMP_Text _textPrice;
 
     protected Button _button;
     protected int _index;

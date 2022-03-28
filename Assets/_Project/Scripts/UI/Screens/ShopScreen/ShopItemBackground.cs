@@ -1,4 +1,4 @@
-public class ShopItemBackground : ShopSectionContentItem
+public class ShopItemBackground : ShopItem
 {
     public override bool TryBuy()
     {
