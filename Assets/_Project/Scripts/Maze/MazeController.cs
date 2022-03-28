@@ -2,11 +2,13 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MazeMovingController : MonoBehaviour
+public class MazeController : MonoBehaviour
 {
     [SerializeField] private float _mazeStartPoint = 8f;
     [SerializeField] private float _mazeEndPoint = -1f;
     [SerializeField] private float _durationMovingMaze = 10f;
+    [SerializeField] private BorderController _gameBorderController;
+    [SerializeField] private Color _gameBorderColor = Color.red;
 
     private MazeSpawnerCells _mazeSpawner;
     private Tween _tween;
@@ -24,6 +26,10 @@ public class MazeMovingController : MonoBehaviour
     {
         MazeDestroyEvent.AddListener(Clear);
 
+        transform.localPosition = Vector3.zero;
+
+        _gameBorderController.SetDangerous(_gameBorderColor);
+
         _mazeSpawner.SpawnCells();
 
         transform.position = new Vector3(transform.position.x, _mazeStartPoint, transform.position.z);
@@ -40,11 +46,12 @@ public class MazeMovingController : MonoBehaviour
     {
         _tween.OnKill(() =>
         {
+            _gameBorderController.SetSafe();
             MazeDestroyEvent.RemoveListener(Clear);
             _mazeSpawner.Clear();
-            transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+            //transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
         });
-        
+
         _tween.Kill();
     }
 }

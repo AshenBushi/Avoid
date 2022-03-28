@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +10,7 @@ public class ColorSetter : MonoBehaviour
     private ParticleSystem _particleSystem;
 
     private Color GameColor => ColorManager.Instance.GameColor;
-    
+
     private void Awake()
     {
         if (TryGetComponent(out Image image))
@@ -19,7 +18,7 @@ public class ColorSetter : MonoBehaviour
 
         if (TryGetComponent(out TMP_Text text))
             _text = text;
-        
+
         if (TryGetComponent(out ParticleSystem particle))
             _particleSystem = particle;
     }
@@ -35,6 +34,18 @@ public class ColorSetter : MonoBehaviour
         OnColorChanged();
     }
 
+    public void SetColorImage(Color color)
+    {
+        if (_image != null)
+            _image.color = color;
+    }
+
+    public void SetDefaultColorImage()
+    {
+        if (_image != null)
+            _image.color = GameColor;
+    }
+
     private void OnColorChanged()
     {
         if (_image != null)
@@ -47,7 +58,7 @@ public class ColorSetter : MonoBehaviour
         {
             var color = GameColor;
             color.a = 0.3f;
-            
+
             _particleSystem.startColor = color;
             _particleSystem.Play();
         }

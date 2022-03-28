@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
 
         SpawnersManager.Instance.EndSpawning();
 
-        MazeMovingController.MazeDestroyEvent?.Invoke();
+        MazeController.MazeDestroyEvent?.Invoke();
     }
 
     private void ReduceSize()

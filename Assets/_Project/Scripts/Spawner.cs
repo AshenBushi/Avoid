@@ -25,7 +25,7 @@ public class Spawner : ObjectPool<Item>, ISpawner
         _moveDuration = _defaultMoveDuration;
 
         ScoreCounter.OnMazeActivationEvent.AddListener(EndSpawning);
-        MazeMovingController.MazeCompleteEvent.AddListener(StartSpawning);
+        MazeController.MazeCompleteEvent.AddListener(StartSpawning);
     }
 
     protected virtual void FixedUpdate()

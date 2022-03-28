@@ -9,12 +9,12 @@ public class MazeSpawnerCells : MonoBehaviour
     private int _heidth = 8;
 
     private Maze _maze;
-    private Vector3 _cellSize = new Vector3(1.5f, 1, 0f);
+    private Vector3 _cellSize = new Vector3(1.8f, 1, 0f);
     private List<MazeCell> _cells = new List<MazeCell>();
 
     public void SpawnCells()
     {
-        // transform.localPosition = Vector3.zero;
+        transform.localPosition = Vector3.zero;
 
         _cells = new List<MazeCell>();
         MazeGenerator generator = new MazeGenerator(_width, _heidth);
@@ -33,7 +33,7 @@ public class MazeSpawnerCells : MonoBehaviour
             }
         }
 
-        transform.position = new Vector3(-_width / (_cellSize.x * 1.2f), -_heidth / (_cellSize.y * 1.2f), 0f);
+        transform.position = new Vector3(-_width / (_cellSize.x * 0.9f), -_heidth / (_cellSize.y * 1.2f), 0f);
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0f);
     }
 

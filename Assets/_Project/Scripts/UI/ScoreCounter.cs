@@ -9,6 +9,7 @@ public class ScoreCounter : MonoBehaviour
     [SerializeField] private TMP_Text _textWaveNumber;
     private TMP_Text _text;
     private Tween _tween;
+    private int _waveCounter = 1;
     private bool _isMazeCreated;
 
     public int Score { get; private set; } = 0;
@@ -18,7 +19,7 @@ public class ScoreCounter : MonoBehaviour
     private void Awake()
     {
         _text = GetComponent<TMP_Text>();
-        MazeMovingController.MazeCompleteEvent.AddListener(SetWaveNumber);
+        MazeController.MazeCompleteEvent.AddListener(SetWaveNumber);
     }
 
     private void Start()
@@ -28,7 +29,7 @@ public class ScoreCounter : MonoBehaviour
 
     private void OnDisable()
     {
-        MazeMovingController.MazeCompleteEvent.RemoveListener(SetWaveNumber);
+        MazeController.MazeCompleteEvent.RemoveListener(SetWaveNumber);
     }
 
     public void AddScore()
@@ -47,7 +48,8 @@ public class ScoreCounter : MonoBehaviour
     private void SetWaveNumber()
     {
         _isMazeCreated = false;
-        _textWaveNumber.text = "Wave " + ((Score % 10) + 1);
+        _textWaveNumber.text = "Wave " + (_waveCounter);
+        _waveCounter++;
         _tween = _textWaveNumber.DOFade(1f, 0.5f).SetLink(gameObject);
 
         _tween.OnComplete(() =>

@@ -37,7 +37,11 @@ public class MazeGenerator
         cells[Random.Range(1, _width - 1), _height - 1].IsWallBottom = false;
         cells[Random.Range(1, _width - 1), 0].IsWallBottom = false;
 
-
+        for (int i = 0; i < cells.GetLength(1); i++)
+        {
+            cells[0, i].IsWallLeft = false;
+            cells[_width - 1, i].IsWallLeft = false;
+        }
 
         //var cellStart = PlaceMazeExit(cells, false);
         RemoveWallsWithBacktracker(cells);
