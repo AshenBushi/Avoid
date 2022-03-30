@@ -33,7 +33,7 @@ public class MazeSpawnerCells : MonoBehaviour
             }
         }
 
-        transform.position = new Vector3(-_width / (_cellSize.x * 0.9f), -_heidth / (_cellSize.y * 1.2f), 0f);
+        transform.position = new Vector3(-_width / (_cellSize.x * 0.8f), -_heidth / (_cellSize.y * 1.2f), 0f);
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0f);
     }
 

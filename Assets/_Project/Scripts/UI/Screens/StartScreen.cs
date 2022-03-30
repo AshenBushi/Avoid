@@ -13,6 +13,6 @@ public class StartScreen : UIScreen
         SpawnersManager.Instance.StartSpawning();
 
         FirebaseAnalytics.LogEvent("session_start");
-        FirebaseAnalytics.LogEvent("current_color_(" + SavingSystem.Instance.Data.GameColorName + ")");
+        FirebaseAnalytics.LogEvent("current_color_(" + SavingSystem.Instance.Data.UIColorName + ")");
     }
 }

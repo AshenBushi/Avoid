@@ -55,25 +55,27 @@ public class SavingSystem : Singleton<SavingSystem>
 [Serializable]
 public class Data
 {
-    public bool VolumeState;
+    public Color UIColor;
+    public Color PlayerColor;
+    public ShopData Shop;
+    public string UIColorName;
     public int BestScore;
     public int DeathCount;
     public int Money;
-    public Color GameColor;
-    public string GameColorName;
-    public ShopData Shop;
     public int CurSelectedCharacterIndex;
     public int CurSelectedCharacterColorIndex;
     public int CurSelectedGameColorIndex;
     public int CurSelectedBackgroundIndex;
+    public bool VolumeState;
 
     public Data()
     {
         VolumeState = true;
         BestScore = 0;
         DeathCount = 0;
-        GameColor = Color.green;
-        GameColorName = "Green";
+        UIColor = Color.green;
+        PlayerColor = Color.green;
+        UIColorName = "Green";
         Money = 0;
 
         CurSelectedCharacterIndex = 0;

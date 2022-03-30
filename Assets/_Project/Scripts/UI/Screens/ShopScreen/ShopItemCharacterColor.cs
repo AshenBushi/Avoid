@@ -16,6 +16,7 @@ public class ShopItemCharacterColor : ShopItem
 
     public override void TrySelect()
     {
+        ColorManager.Instance.ChangePlayerColor(_icon);
         SavingSystem.Instance.Data.CurSelectedCharacterColorIndex = _index;
         SavingSystem.Instance.Save();
     }

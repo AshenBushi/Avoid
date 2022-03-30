@@ -15,23 +15,23 @@ public class SoundSwitcher : MonoBehaviour
 
     private void Start()
     {
-        ColorManager.Instance.OnColorChanged += OnColorChanged;
-        _image.color = SoundManager.Instance.VolumeState ? ColorManager.Instance.GameColor : _disabled;
+        ColorManager.Instance.OnUIColorChanged += OnColorChanged;
+        _image.color = SoundManager.Instance.VolumeState ? ColorManager.Instance.UIColor : _disabled;
     }
 
     private void OnDisable()
     {
-        ColorManager.Instance.OnColorChanged -= OnColorChanged;
+        ColorManager.Instance.OnUIColorChanged -= OnColorChanged;
     }
 
     public void SwitchSound()
     {
-        _image.color = SoundManager.Instance.SwitchVolume() ? ColorManager.Instance.GameColor : _disabled;
+        _image.color = SoundManager.Instance.SwitchVolume() ? ColorManager.Instance.UIColor : _disabled;
     }
 
     private void OnColorChanged()
     {
         if (SavingSystem.Instance.Data.VolumeState)
-            _image.color = ColorManager.Instance.GameColor;
+            _image.color = ColorManager.Instance.UIColor;
     }
 }

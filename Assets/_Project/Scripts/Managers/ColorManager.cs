@@ -4,16 +4,25 @@ using UnityEngine.UI;
 
 public class ColorManager : Singleton<ColorManager>
 {
-    public Color GameColor => SavingSystem.Instance.Data.GameColor;
+    public Color UIColor => SavingSystem.Instance.Data.UIColor;
+    public Color PlayerColor => SavingSystem.Instance.Data.PlayerColor;
 
-    public event UnityAction OnColorChanged;
+    public event UnityAction OnUIColorChanged, OnPlayerColorChanged;
 
-    public void ChangeColor(Image image)
+    public void ChangeUIColor(Image image)
     {
-        SavingSystem.Instance.Data.GameColor = image.color;
-        SavingSystem.Instance.Data.GameColorName = image.gameObject.name;
+        SavingSystem.Instance.Data.UIColor = image.color;
+        SavingSystem.Instance.Data.UIColorName = image.gameObject.name;
         SavingSystem.Instance.Save();
 
-        OnColorChanged?.Invoke();
+        OnUIColorChanged?.Invoke();
+    }
+
+    public void ChangePlayerColor(Image image)
+    {
+        SavingSystem.Instance.Data.PlayerColor = image.color;
+        SavingSystem.Instance.Save();
+
+        OnPlayerColorChanged?.Invoke();
     }
 }
