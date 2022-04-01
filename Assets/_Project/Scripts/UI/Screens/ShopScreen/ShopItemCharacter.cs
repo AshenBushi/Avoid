@@ -17,6 +17,12 @@
     public override void TrySelect()
     {
         SavingSystem.Instance.Data.CurSelectedCharacterIndex = _index;
+
+        if (!SavingSystem.Instance.Data.Shop.OpenedCharacters.Contains(_index))
+            SavingSystem.Instance.Data.Shop.OpenedCharacters.Add(_index);
+
         SavingSystem.Instance.Save();
+
+        ColorManager.Instance.ChangePlayerSkin();
     }
 }

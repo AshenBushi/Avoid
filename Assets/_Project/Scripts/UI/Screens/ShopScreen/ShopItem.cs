@@ -1,11 +1,9 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class ShopItem : MonoBehaviour, IShopItem
 {
     [SerializeField] protected Image _icon;
-    //[SerializeField] protected TMP_Text _textPrice;
 
     protected Button _button;
     protected int _index;

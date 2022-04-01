@@ -15,6 +15,8 @@ public class ScoreCounter : MonoBehaviour
     public int Score { get; private set; } = 0;
 
     public static UnityEvent OnMazeActivationEvent = new UnityEvent();
+    
+    public const int SCORE_FOR_START_MAZE = 100;
 
     private void Awake()
     {
@@ -38,7 +40,7 @@ public class ScoreCounter : MonoBehaviour
 
         _text.text = Score.ToString();
 
-        if (Score % 10 == 0 && Score != 0 && !_isMazeCreated)
+        if (Score % SCORE_FOR_START_MAZE == 0 && Score != 0 && !_isMazeCreated)
         {
             _isMazeCreated = true;
             OnMazeActivationEvent?.Invoke();

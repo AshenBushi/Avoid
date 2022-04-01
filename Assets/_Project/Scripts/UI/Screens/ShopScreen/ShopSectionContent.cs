@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,10 @@ public class ShopSectionContent : MonoBehaviour
     public RectTransform RectTransform => _rectTransform;
     public HorizontalLayoutGroup HorLayoutGroup => _horLayoutGroup;
     public List<ShopSectionContentPage> Pages => _pages;
+
+    public List<IShopItem> Items => _items;
+
+    public event Action OnItemsAdded;
 
     private void Awake()
     {
@@ -39,5 +44,7 @@ public class ShopSectionContent : MonoBehaviour
         {
             _items[i].Init(i);
         }
+
+        OnItemsAdded?.Invoke();
     }
 }
