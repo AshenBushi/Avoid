@@ -2,14 +2,14 @@ using System.Collections.Generic;
 
 public class SpawnersManager : Singleton<SpawnersManager>
 {
-    public IStateEnemy SpawnerEnemy { get; private set; }
+    public ISpawnerEnemyState SpawnerEnemy { get; private set; }
     public List<ISpawner> ItemSpawners { get; set; } = new List<ISpawner>();
 
     protected override void Awake()
     {
         base.Awake();
 
-        SpawnerEnemy = GetComponentInChildren<IStateEnemy>();
+        SpawnerEnemy = GetComponentInChildren<ISpawnerEnemyState>();
         ItemSpawners.AddRange(GetComponentsInChildren<ISpawner>());
     }
 

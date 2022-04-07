@@ -9,7 +9,7 @@ public enum StateEnemy
     destroying
 }
 
-public class SpawnerEnemy : Spawner, IStateEnemy
+public class SpawnerEnemy : Spawner, ISpawnerEnemyState
 {
     [SerializeField] private ScoreCounter _scoreCounter;
 
@@ -17,6 +17,12 @@ public class SpawnerEnemy : Spawner, IStateEnemy
     private StateEnemy _state;
     private float _time;
     private bool _isStateTimerOn;
+
+    protected override void Start()
+    {
+        base.Start();
+        ScoreCounter.OnMazeActivationEvent.AddListener(DeactivationAllEnemyWithoutScore);
+    }
 
     protected override void FixedUpdate()
     {
@@ -43,7 +49,7 @@ public class SpawnerEnemy : Spawner, IStateEnemy
         {
             enemy.Init(startPosition, endPosition, _moveDuration);
             enemy.SetDamageDone(1);
-            enemy.OnMovingEnd += OnEnemyMovingEnd;
+            enemy.OnEndedMoving += OnEndedMovingEnemy;
 
             if (_isStateTimerOn)
             {
@@ -84,12 +90,6 @@ public class SpawnerEnemy : Spawner, IStateEnemy
         _isStateTimerOn = true;
     }
 
-    private void OnEnemyMovingEnd(Item enemy)
-    {
-        _scoreCounter.AddScore();
-        enemy.OnMovingEnd -= OnEnemyMovingEnd;
-    }
-
     private void IncreaseDifficult()
     {
         var tempValue = _defaultMoveDuration - 0.4f * (_scoreCounter.Score / 100);
@@ -97,5 +97,31 @@ public class SpawnerEnemy : Spawner, IStateEnemy
         _moveDuration = tempValue <= 0 ? 0.2f : tempValue;
 
         _spawnDelay = _defaultDelay - 0.8f * (float)(_scoreCounter.Score / 100f - Math.Truncate(_scoreCounter.Score / 100f));
+    }
+
+    private void DeactivationAllEnemyWithoutScore()
+    {
+        for (int i = 0; i < _pool.Count; i++)
+        {
+            if (!_pool[i].gameObject.activeSelf) continue;
+
+            _pool[i].OnEndedMoving -= OnEndedMovingEnemy;
+            _pool[i].OnEndedMoving += OnEndingMovingEvemyWithoutScore;
+
+            _pool[i].Deactivation();
+        }
+
+        return;
+    }
+
+    private void OnEndedMovingEnemy(Item enemy)
+    {
+        _scoreCounter.AddScore();
+        enemy.OnEndedMoving -= OnEndedMovingEnemy;
+    }
+
+    private void OnEndingMovingEvemyWithoutScore(Item enemy)
+    {
+        enemy.OnEndedMoving -= OnEndedMovingEnemy;
     }
 }

@@ -98,6 +98,21 @@ public class Spawner : ObjectPool<Item>, ISpawner
         listDisableItems[Random.Range(0, listDisableItems.Count)].Init(startPosition, endPosition, _moveDuration);
     }
 
+    public virtual void Spawn(Item item, Transform transform)
+    {
+        GetRandomPositions(out var startPosition, out var endPosition);
+
+        for (int i = 0; i < _pool.Count; i++)
+        {
+            if (_pool[i] == item)
+            {
+                _pool[i].Init(startPosition, endPosition, _moveDuration);
+                _pool[i].transform.position = transform.position;
+                break;
+            }
+        }
+    }
+
     public virtual void StartSpawning()
     {
         _canSpawn = true;

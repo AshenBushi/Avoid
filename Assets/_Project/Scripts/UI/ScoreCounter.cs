@@ -15,8 +15,8 @@ public class ScoreCounter : MonoBehaviour
     public int Score { get; private set; } = 0;
 
     public static UnityEvent OnMazeActivationEvent = new UnityEvent();
-    
-    public const int SCORE_FOR_START_MAZE = 100;
+
+    public const int SCORE_FOR_START_MAZE = 10;
 
     private void Awake()
     {
@@ -56,7 +56,7 @@ public class ScoreCounter : MonoBehaviour
 
         _tween.OnComplete(() =>
         {
-            _textWaveNumber.DOFade(0f, 2f).SetLink(gameObject);
+            _tween = _textWaveNumber.DOFade(0f, 2f).SetLink(gameObject);
         });
     }
 }

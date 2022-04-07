@@ -12,7 +12,8 @@ public class PlayerColorSetter : MonoBehaviour
         if (TryGetComponent(out Image image))
             _image = image;
 
-        _isPlayer = TryGetComponent(out Player player);
+        if (GetComponentInParent<Player>())
+            _isPlayer = true;
     }
 
     private void OnDisable()
@@ -38,7 +39,9 @@ public class PlayerColorSetter : MonoBehaviour
     {
         if (!_isPlayer) return;
 
-        if (_image != null)
-            _image.sprite = sprite;
+        if (_image == null) return;
+
+        _image.sprite = sprite;
+        _image.SetNativeSize();
     }
 }

@@ -5,11 +5,9 @@ using Random = UnityEngine.Random;
 public interface ISpawner
 {
     public void GetRandomPositions(out Vector3 startPosition, out Vector3 endPosition);
-    
     public void Spawn();
-
+    public void Spawn(Item item, Transform transform);
     public void StartSpawning();
-
     public void EndSpawning();
 }
 

@@ -13,7 +13,7 @@ public abstract class Item : MonoBehaviour
 
     protected Tween Mover;
 
-    public event UnityAction<Item> OnMovingEnd;
+    public event UnityAction<Item> OnEndedMoving;
 
     protected virtual void Awake()
     {
@@ -53,7 +53,7 @@ public abstract class Item : MonoBehaviour
         if (!gameObject.activeSelf) return;
 
         Mover.Kill();
-        MovingEnd();
+        EndMoving();
         gameObject.SetActive(false);
     }
 
@@ -68,14 +68,14 @@ public abstract class Item : MonoBehaviour
 
         Mover.OnComplete(() =>
         {
-            MovingEnd();
+            EndMoving();
 
             gameObject.SetActive(false);
         });
     }
 
-    protected virtual void MovingEnd()
+    protected virtual void EndMoving()
     {
-        OnMovingEnd?.Invoke(this);
+        OnEndedMoving?.Invoke(this);
     }
 }
