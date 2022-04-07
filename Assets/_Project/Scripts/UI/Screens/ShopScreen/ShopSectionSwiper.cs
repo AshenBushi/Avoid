@@ -7,6 +7,7 @@ public class ShopSectionSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
     [SerializeField] private float _duration;
 
     private ShopSectionContent _content;
+    private ShopSectionNavigation _navigation;
     private int _currentPage = 0;
     private int _fastScrollIndex = 0;
     private bool _isFastScroll = false;
@@ -14,6 +15,7 @@ public class ShopSectionSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
     private void Awake()
     {
         _content = GetComponentInChildren<ShopSectionContent>();
+        _navigation = GetComponentInChildren<ShopSectionNavigation>();
     }
 
     private void Start()
@@ -64,6 +66,8 @@ public class ShopSectionSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
     private void SelectCurrentPage(float duration)
     {
+        _navigation.EnablePointCurrentPage(_currentPage);
+
         _content.RectTransform
             .DOLocalMove(
                 new Vector3(-_content.Pages[_currentPage].RectTransform.localPosition.x + (_content.Pages[_currentPage].RectTransform.sizeDelta.x + _content.HorLayoutGroup.spacing) / 2,
