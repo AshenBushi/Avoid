@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Bonus : Item
 {
@@ -7,7 +8,7 @@ public abstract class Bonus : Item
 
     protected override void OnTriggerEnter2D(Collider2D other)
     {
-        
+
     }
 
     protected virtual void OnTriggerStay2D(Collider2D collision)
