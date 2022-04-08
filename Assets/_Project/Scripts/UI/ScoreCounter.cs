@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,7 +9,6 @@ public class ScoreCounter : MonoBehaviour
 {
     [SerializeField] private TMP_Text _textWaveNumber;
     private TMP_Text _text;
-    private Tween _tween;
     private int _waveCounter = 1;
     private bool _isMazeCreated;
 
@@ -21,17 +21,20 @@ public class ScoreCounter : MonoBehaviour
     private void Awake()
     {
         _text = GetComponent<TMP_Text>();
+
         MazeController.MazeCompleteEvent.AddListener(SetWaveNumber);
     }
 
     private void Start()
     {
-        SetWaveNumber();
+        StartScreen.OnGameStart += SetWaveNumber;
     }
 
     private void OnDisable()
     {
         MazeController.MazeCompleteEvent.RemoveListener(SetWaveNumber);
+
+        StartScreen.OnGameStart -= SetWaveNumber;
     }
 
     public void AddScore()
@@ -52,11 +55,15 @@ public class ScoreCounter : MonoBehaviour
         _isMazeCreated = false;
         _textWaveNumber.text = "Wave " + (_waveCounter);
         _waveCounter++;
-        _tween = _textWaveNumber.DOFade(1f, 0.5f).SetLink(gameObject);
 
-        _tween.OnComplete(() =>
-        {
-            _tween = _textWaveNumber.DOFade(0f, 2f).SetLink(gameObject);
-        });
+        StartCoroutine(FadeTextWave());
+    }
+
+    private IEnumerator FadeTextWave()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _textWaveNumber.DOFade(1f, 1.5f).SetLink(gameObject);
+        yield return new WaitForSeconds(1f);
+        _textWaveNumber.DOFade(0f, 1.5f).SetLink(gameObject);
     }
 }

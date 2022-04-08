@@ -43,20 +43,11 @@ public class MazeGenerator
             cells[_width - 1, i].IsWallLeft = false;
         }
 
-        //var cellStart = PlaceMazeExit(cells, false);
         RemoveWallsWithBacktracker(cells);
 
         Maze maze = new Maze();
 
         maze.Cells = cells;
-
-        //for (int x = 0; x < maze.Cells.GetLength(0); x++)
-        //{
-        //    Debug.Log(maze.Cells[x, _height - 1].Y);
-        //}
-
-        //maze.StartCell = cellStart;
-        //maze.FinishCell = PlaceMazeExit(cells, true);
 
         return maze;
     }
