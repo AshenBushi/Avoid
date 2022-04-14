@@ -12,6 +12,7 @@ public class GameOverScreen : UIScreen
     [SerializeField] private Button _continueButton;
     [SerializeField] private TMP_Text _score;
     [SerializeField] private TMP_Text _bestScore;
+    [SerializeField] private TMP_Text _moneyAmountText;
 
     private bool _isGameContinue = false;
 
@@ -39,15 +40,20 @@ public class GameOverScreen : UIScreen
         if (_isGameContinue)
             _continueButton.gameObject.SetActive(false);
 
-        _score.text = _scoreCounter.Score.ToString();
+        var amountMoney = _scoreCounter.Score / 10;
 
+        _score.text = _scoreCounter.Score.ToString();
+        _moneyAmountText.text = amountMoney.ToString();
+
+        SavingSystem.Instance.Data.Money += amountMoney;
         SavingSystem.Instance.Data.DeathCount++;
 
         if (SavingSystem.Instance.Data.BestScore < _scoreCounter.Score)
         {
             SavingSystem.Instance.Data.BestScore = _scoreCounter.Score;
-            SavingSystem.Instance.Save();
         }
+
+        SavingSystem.Instance.Save();
 
         _bestScore.text = SavingSystem.Instance.Data.BestScore.ToString();
 
