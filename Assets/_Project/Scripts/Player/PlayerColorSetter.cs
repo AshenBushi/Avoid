@@ -33,6 +33,10 @@ public class PlayerColorSetter : MonoBehaviour
     {
         if (_image != null)
             _image.color = PlayerColor;
+
+        if (!_isPlayer) return;
+
+        _image.material.color = PlayerColor;
     }
 
     private void OnPlayerSkinChange(Sprite sprite)
@@ -42,6 +46,7 @@ public class PlayerColorSetter : MonoBehaviour
         if (_image == null) return;
 
         _image.sprite = sprite;
+        _image.material.color = PlayerColor;
         _image.SetNativeSize();
     }
 }
