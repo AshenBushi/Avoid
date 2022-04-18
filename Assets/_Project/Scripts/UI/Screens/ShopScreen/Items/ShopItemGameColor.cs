@@ -1,20 +1,32 @@
 public class ShopItemGameColor : ShopItem
 {
-    public override bool TryBuy()
+    public override void Init(int index)
     {
-        if (SavingSystem.Instance.Data.Money < _price)
-            return false;
+        _index = index;
+        _price = 50;
 
-        if (SavingSystem.Instance.Data.Shop.OpenedGameColors.Contains(_index))
-            return false;
+        if (SavingSystem.Instance.Data.Shop.OpenedGameColors.Contains(index))
+        {
+            _button.onClick.AddListener(Select);
+            DisableLockedIcon();
+            return;
+        }
 
-        SavingSystem.Instance.Data.Shop.OpenedGameColors.Add(_index);
-        SavingSystem.Instance.Save();
-
-        return true;
+        _button.onClick.AddListener(Buy);
     }
 
-    public override void TrySelect()
+    public override void Buy()
+    {
+        if (!_isLocked) return;
+        if (SavingSystem.Instance.Data.Shop.OpenedGameColors.Contains(_index)) return;
+        if (!Bank.Instance.TryWithdrawMoney(_price)) return;
+
+        DisableLockedIcon();
+        SavingSystem.Instance.Data.Shop.OpenedGameColors.Add(_index);
+        Select();
+    }
+
+    public override void Select()
     {
         ColorManager.Instance.ChangeUIColor(_icon);
         SavingSystem.Instance.Data.CurSelectedGameColorIndex = _index;

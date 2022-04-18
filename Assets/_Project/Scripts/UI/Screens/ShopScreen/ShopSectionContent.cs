@@ -11,6 +11,7 @@ public class ShopSectionContent : MonoBehaviour
     private HorizontalLayoutGroup _horLayoutGroup;
     private List<IShopItem> _items = new List<IShopItem>();
     private List<ShopSectionContentPage> _pages = new List<ShopSectionContentPage>();
+    private bool _isGetted = false;
 
     public RectTransform RectTransform => _rectTransform;
     public HorizontalLayoutGroup HorLayoutGroup => _horLayoutGroup;
@@ -22,6 +23,21 @@ public class ShopSectionContent : MonoBehaviour
     private void Awake()
     {
         StartCoroutine(GetComponentsRoutine());
+        ShopScreen.OnEnablingEvent += ShopItemsUpdate;
+    }
+
+    private void OnDisable()
+    {
+        ShopScreen.OnEnablingEvent -= ShopItemsUpdate;
+    }
+
+    private void ShopItemsUpdate()
+    {
+        if (_isGetted)
+            for (int i = 0; i < _items.Count; i++)
+            {
+                _items[i].Init(i);
+            }
     }
 
     private IEnumerator GetComponentsRoutine()
@@ -35,6 +51,7 @@ public class ShopSectionContent : MonoBehaviour
         {
             _pages[i].Init();
         }
+
         yield return null;
 
         _items = GetComponentsInChildren<IShopItem>().ToList();
@@ -44,6 +61,7 @@ public class ShopSectionContent : MonoBehaviour
             _items[i].Init(i);
         }
 
+        _isGetted = true;
         OnEndedGettingComponents?.Invoke();
     }
 }

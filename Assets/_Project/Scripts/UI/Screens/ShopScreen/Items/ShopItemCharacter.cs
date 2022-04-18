@@ -1,28 +1,35 @@
 ﻿public class ShopItemCharacter : ShopItem
 {
-    public override bool TryBuy()
+    public override void Init(int index)
     {
-        if (SavingSystem.Instance.Data.Money < _price)
-            return false;
+        _index = index;
+        _price = 100;
 
-        if (SavingSystem.Instance.Data.Shop.OpenedCharacters.Contains(_index))
-            return false;
+        if (SavingSystem.Instance.Data.Shop.OpenedCharacters.Contains(index))
+        {
+            _button.onClick.AddListener(Select);
+            DisableLockedIcon();
+            return;
+        }
 
-        SavingSystem.Instance.Data.Shop.OpenedCharacters.Add(_index);
-        SavingSystem.Instance.Save();
-
-        return true;
+        _button.onClick.AddListener(Buy);
     }
 
-    public override void TrySelect()
+    public override void Buy()
     {
-        SavingSystem.Instance.Data.CurSelectedCharacterIndex = _index;
+        if (!_isLocked) return;
+        if (SavingSystem.Instance.Data.Shop.OpenedCharacters.Contains(_index)) return;
+        if (!Bank.Instance.TryWithdrawMoney(_price)) return;
 
-        if (!SavingSystem.Instance.Data.Shop.OpenedCharacters.Contains(_index))
-            SavingSystem.Instance.Data.Shop.OpenedCharacters.Add(_index);
+        DisableLockedIcon();
+        SavingSystem.Instance.Data.Shop.OpenedCharacters.Add(_index);
+        Select();
+    }
 
-        SavingSystem.Instance.Save();
-
+    public override void Select()
+    {
         ColorManager.Instance.ChangePlayerSkin();
+        SavingSystem.Instance.Data.CurSelectedCharacterIndex = _index;
+        SavingSystem.Instance.Save();
     }
 }

@@ -13,9 +13,15 @@ public class ColorManager : Singleton<ColorManager>
     public event UnityAction OnUIColorChanged, OnPlayerColorChanged;
     public event UnityAction<Sprite> OnPlayerSkinChange;
 
-    private void Start()
+    protected override void Awake()
     {
-        ChangePlayerSkin();
+        base.Awake();
+        StartScreen.OnGameStart += ChangePlayerSkin;
+    }
+
+    private void OnDisable()
+    {
+        StartScreen.OnGameStart -= ChangePlayerSkin;
     }
 
     public void ChangeUIColor(Image image)

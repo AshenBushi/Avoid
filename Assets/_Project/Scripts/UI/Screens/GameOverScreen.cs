@@ -45,7 +45,7 @@ public class GameOverScreen : UIScreen
         _score.text = _scoreCounter.Score.ToString();
         _moneyAmountText.text = amountMoney.ToString();
 
-        SavingSystem.Instance.Data.Money += amountMoney;
+        Bank.Instance.AddMoney(amountMoney);
         SavingSystem.Instance.Data.DeathCount++;
 
         if (SavingSystem.Instance.Data.BestScore < _scoreCounter.Score)
