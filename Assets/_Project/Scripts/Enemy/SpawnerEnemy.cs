@@ -18,12 +18,6 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
     private float _time;
     private bool _isStateTimerOn;
 
-    protected override void Start()
-    {
-        base.Start();
-        ScoreCounter.OnMazeActivationEvent.AddListener(DeactivationAllEnemyWithoutScore);
-    }
-
     protected override void FixedUpdate()
     {
         if (_isStateTimerOn)
@@ -99,7 +93,7 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
         _spawnDelay = _defaultDelay - 0.8f * (float)(_scoreCounter.Score / 100f - Math.Truncate(_scoreCounter.Score / 100f));
     }
 
-    private void DeactivationAllEnemyWithoutScore()
+    protected override void DeactivationAllObject()
     {
         for (int i = 0; i < _pool.Count; i++)
         {
@@ -110,8 +104,6 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
 
             _pool[i].Deactivation();
         }
-
-        return;
     }
 
     private void OnEndedMovingEnemy(Item enemy)

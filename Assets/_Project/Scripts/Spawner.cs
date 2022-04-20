@@ -25,6 +25,7 @@ public class Spawner : ObjectPool<Item>, ISpawner
         _moveDuration = _defaultMoveDuration;
 
         ScoreCounter.OnMazeActivationEvent.AddListener(EndSpawning);
+        ScoreCounter.OnMazeActivationEvent.AddListener(DeactivationAllObject);
         MazeController.MazeCompleteEvent.AddListener(StartSpawning);
     }
 
@@ -121,5 +122,15 @@ public class Spawner : ObjectPool<Item>, ISpawner
     public virtual void EndSpawning()
     {
         _canSpawn = false;
+    }
+
+    protected virtual void DeactivationAllObject()
+    {
+        for (int i = 0; i < _pool.Count; i++)
+        {
+            if (!_pool[i].gameObject.activeSelf) continue;
+
+            _pool[i].Deactivation();
+        }
     }
 }

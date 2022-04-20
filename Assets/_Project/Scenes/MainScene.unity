@@ -363,8 +363,8 @@ MonoBehaviour:
   _bottomSide:
     _firstPoint: {x: -500, y: -510, z: 0}
     _lastPoint: {x: 500, y: -510, z: 0}
-  _defaultDelay: 7
-  _defaultMoveDuration: 4
+  _defaultDelay: 6
+  _defaultMoveDuration: 2
 --- !u!1 &65391913
 GameObject:
   m_ObjectHideFlags: 0
@@ -14863,6 +14863,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 83386649}
     m_Modifications:
+    - target: {fileID: 4181497383893952686, guid: fb79eff0bababc444812fcbad002996a, type: 3}
+      propertyPath: m_fontSize
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4181497383893952686, guid: fb79eff0bababc444812fcbad002996a, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4181497383893952686, guid: fb79eff0bababc444812fcbad002996a, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4181497384031556772, guid: fb79eff0bababc444812fcbad002996a, type: 3}
       propertyPath: m_Name
       value: MoneyDisplayer
@@ -14902,6 +14914,14 @@ PrefabInstance:
     - target: {fileID: 4181497384031556773, guid: fb79eff0bababc444812fcbad002996a, type: 3}
       propertyPath: m_SizeDelta.y
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4181497384031556773, guid: fb79eff0bababc444812fcbad002996a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4181497384031556773, guid: fb79eff0bababc444812fcbad002996a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4181497384031556773, guid: fb79eff0bababc444812fcbad002996a, type: 3}
       propertyPath: m_LocalPosition.x
