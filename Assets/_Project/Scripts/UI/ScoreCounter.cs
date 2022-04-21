@@ -15,7 +15,7 @@ public class ScoreCounter : MonoBehaviour
 
     public static UnityEvent OnMazeActivationEvent = new UnityEvent();
 
-    public const int SCORE_FOR_START_MAZE = 1;
+    public const int SCORE_FOR_START_MAZE = 100;
 
     private void Awake()
     {
