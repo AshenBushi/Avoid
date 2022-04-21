@@ -7,10 +7,10 @@ public class HeartCounter : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private Heart _template;
-    
+
     private List<Heart> _hearts = new List<Heart>();
     private int _currentHeart;
-    
+
     public void Init()
     {
         if (_hearts.Count > 0)
@@ -19,7 +19,7 @@ public class HeartCounter : MonoBehaviour
             {
                 Destroy(heart.gameObject);
             }
-            
+
             _hearts.Clear();
         }
 
@@ -35,7 +35,7 @@ public class HeartCounter : MonoBehaviour
     {
         Init();
     }
-    
+
     private void OnEnable()
     {
         _player.OnTookDamage += OnTookDamage;
@@ -45,7 +45,7 @@ public class HeartCounter : MonoBehaviour
     private void OnDisable()
     {
         _player.OnTookDamage -= OnTookDamage;
-        _player.OnHeal += OnHeal;
+        _player.OnHeal -= OnHeal;
     }
 
     private void OnTookDamage()
@@ -54,13 +54,13 @@ public class HeartCounter : MonoBehaviour
 
         _currentHeart--;
     }
-    
+
     private void OnHeal()
     {
-        if(_currentHeart + 1 >= 5) return;
-        
+        if (_currentHeart + 1 >= 5) return;
+
         _currentHeart++;
-        
+
         _hearts[_currentHeart].EnableHeart();
     }
 }

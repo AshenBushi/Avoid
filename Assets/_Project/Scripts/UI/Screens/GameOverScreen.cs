@@ -66,8 +66,6 @@ public class GameOverScreen : UIScreen
 
         UIManager.Instance.GameScreen.Enable();
         SpawnersManager.Instance.StartSpawning();
-
-        _player.MaxHeal();
     }
 
     public void RestartGame()
@@ -91,6 +89,7 @@ public class GameOverScreen : UIScreen
         AdManager.Instance.RewardedAd.OnAdClosed += OnAdClosedRewarded;
         AdManager.Instance.ShowRewardVideo();
         _isGameContinue = true;
+        _player.MaxHeal();
 
         FirebaseAnalytics.LogEvent("ad_continue");
     }

@@ -102,6 +102,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void TakeTotalDamage()
+    {
+        Die();
+    }
+
     public void Heal()
     {
         if (Health + 1 <= _maxHealth)
@@ -127,9 +132,7 @@ public class Player : MonoBehaviour
     {
         UIManager.Instance.GameOverScreen.Enable();
         UIManager.Instance.GameScreen.Disable();
-
         SpawnersManager.Instance.EndSpawning();
-
         MazeController.MazeDestroyEvent?.Invoke();
     }
 

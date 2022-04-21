@@ -10,13 +10,12 @@ public class ScoreCounter : MonoBehaviour
     [SerializeField] private TMP_Text _textWaveNumber;
     private TMP_Text _text;
     private int _waveCounter = 1;
-    private bool _isMazeCreated;
 
     public int Score { get; private set; } = 0;
 
     public static UnityEvent OnMazeActivationEvent = new UnityEvent();
 
-    public const int SCORE_FOR_START_MAZE = 100;
+    public const int SCORE_FOR_START_MAZE = 1;
 
     private void Awake()
     {
@@ -33,7 +32,6 @@ public class ScoreCounter : MonoBehaviour
     private void OnDisable()
     {
         MazeController.MazeCompleteEvent.RemoveListener(SetWaveNumber);
-
         StartScreen.OnGameStart -= SetWaveNumber;
     }
 
@@ -43,16 +41,14 @@ public class ScoreCounter : MonoBehaviour
 
         _text.text = Score.ToString();
 
-        if (Score % SCORE_FOR_START_MAZE == 0 && Score != 0 && !_isMazeCreated)
+        if (Score % SCORE_FOR_START_MAZE == 0 && Score != 0)
         {
-            _isMazeCreated = true;
             OnMazeActivationEvent?.Invoke();
         }
     }
 
     private void SetWaveNumber()
     {
-        _isMazeCreated = false;
         _textWaveNumber.text = "Wave " + (_waveCounter);
         _waveCounter++;
 

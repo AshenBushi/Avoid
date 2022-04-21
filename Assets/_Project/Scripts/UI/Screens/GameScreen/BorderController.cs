@@ -18,7 +18,7 @@ public class BorderController : MonoBehaviour
         if (!_isDangerous) return;
         if (!other.gameObject.TryGetComponent(out Player player)) return;
 
-        player.TakeDamage(6);
+        player.TakeTotalDamage();
     }
 
     public void SetDangerous(Color color)

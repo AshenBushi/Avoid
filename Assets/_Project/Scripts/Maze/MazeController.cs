@@ -12,6 +12,7 @@ public class MazeController : MonoBehaviour
 
     private MazeSpawnerCells _mazeSpawner;
     private Tween _tween;
+    private bool _isCreated = false;
 
     public static UnityEvent MazeCompleteEvent = new UnityEvent();
     public static UnityEvent MazeDestroyEvent = new UnityEvent();
@@ -24,6 +25,9 @@ public class MazeController : MonoBehaviour
 
     public void Spawn()
     {
+        if (_isCreated) return;
+
+        _isCreated = true;
         MazeDestroyEvent.AddListener(Clear);
 
         transform.localPosition = Vector3.zero;
@@ -49,6 +53,7 @@ public class MazeController : MonoBehaviour
             _gameBorderController.SetSafe();
             MazeDestroyEvent.RemoveListener(Clear);
             _mazeSpawner.Clear();
+            _isCreated = false;
             //transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
         });
 
