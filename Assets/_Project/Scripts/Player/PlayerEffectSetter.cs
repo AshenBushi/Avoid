@@ -8,42 +8,46 @@ public enum BonusType
     Freezing,
     Slowing,
     Accelerating,
-    Destroying
+    Destroying,
+    InvulnerableShort,
 }
 
 public class PlayerEffectSetter : MonoBehaviour
 {
-    private List<PlayerEffect> _effects = new List<PlayerEffect>();
+    [SerializeField] private List<PlayerEffect> _effects;
 
     private void Awake()
     {
-        _effects.AddRange(GetComponentsInChildren<PlayerEffect>());
-        
-        for (var i = 0; i < _effects.Count; i++)
+        for (int i = 0; i < _effects.Count; i++)
         {
             _effects[i].Hide();
         }
     }
 
+    private void Start()
+    {
+        ColorManager.Instance.OnPlayerSkinChange += SetEffectsSkins;
+    }
+
+    private void OnDisable()
+    {
+        ColorManager.Instance.OnPlayerSkinChange -= SetEffectsSkins;
+    }
+
     public void Play(BonusType bonusTypeAnimation)
     {
-        ActivationEffect(true, bonusTypeAnimation);
-    }
-
-    public void Stop(BonusType bonusTypeAnimation)
-    {
-        ActivationEffect(false, bonusTypeAnimation);
-    }
-
-    private void ActivationEffect(bool isPlay, BonusType bonusType)
-    {
-        foreach (var effect in _effects.Where(effect => effect.BonusType == bonusType))
+        foreach (var effect in _effects.Where(effect => effect.BonusType == bonusTypeAnimation))
         {
-            if (isPlay)
-                effect.Show();
-            else
-                effect.Hide();
+            effect.Play();
             break;
+        }
+    }
+
+    private void SetEffectsSkins(Sprite sprite)
+    {
+        for (int i = 0; i < _effects.Count; i++)
+        {
+            _effects[i].SetSprite(sprite);
         }
     }
 }

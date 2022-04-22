@@ -63,10 +63,6 @@ public class Data
     public int BestScore;
     public int DeathCount;
     public int Money;
-    public int CurSelectedCharacterIndex;
-    public int CurSelectedCharacterColorIndex;
-    public int CurSelectedGameColorIndex;
-    public int CurSelectedBackgroundIndex;
     public bool VolumeState;
 
     public Data()
@@ -79,10 +75,10 @@ public class Data
         UIColorName = "Green";
         Money = 0;
 
-        CurSelectedCharacterIndex = 0;
-        CurSelectedCharacterColorIndex = 0;
-        CurSelectedGameColorIndex = 0;
-        CurSelectedBackgroundIndex = 0;
+        Shop.CurSelectedCharacterIndex = 0;
+        Shop.CurSelectedCharacterColorIndex = 0;
+        Shop.CurSelectedGameColorIndex = 0;
+        Shop.CurSelectedBackgroundIndex = 0;
 
         Shop.OpenedCharacters = new List<int>()
         {
@@ -109,6 +105,10 @@ public class Data
 [Serializable]
 public struct ShopData
 {
+    public int CurSelectedCharacterIndex;
+    public int CurSelectedCharacterColorIndex;
+    public int CurSelectedGameColorIndex;
+    public int CurSelectedBackgroundIndex;
     public List<int> OpenedCharacters;
     public List<int> OpenedCharacterColors;
     public List<int> OpenedGameColors;

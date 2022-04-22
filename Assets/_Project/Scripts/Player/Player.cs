@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -31,7 +29,6 @@ public class Player : MonoBehaviour
         _effectSetters = GetComponent<PlayerEffectSetter>();
 
         _standartScale = _rectTransform.localScale;
-
         Health = _maxHealth;
     }
 
@@ -65,25 +62,18 @@ public class Player : MonoBehaviour
         _isUsingBonus = true;
     }
 
-    public void PlayEffectAnimation(BonusType bonusTypeAnimation)
+    public void PlayBonusEffect(BonusType bonusTypeAnimation)
     {
         if (_effectSetters == null) return;
 
         _effectSetters.Play(bonusTypeAnimation);
     }
 
-    public void StopEffectAnimation(BonusType bonusTypeAnimation)
-    {
-        if (_effectSetters == null) return;
-
-        _effectSetters.Stop(bonusTypeAnimation);
-    }
-
     public void TakeDamage(int damage)
     {
         if (!_isCanTakingDamage) return;
 
-        EffectInvulnerableTask();
+        PlayBonusEffect(BonusType.InvulnerableShort);
 
         SoundManager.Instance.PlaySound(Sound.TakeDamage);
 
@@ -166,16 +156,5 @@ public class Player : MonoBehaviour
             scale = new Vector3(scale.x + 0.2f, scale.y + 0.2f);
 
         _rectTransform.DOScale(scale, 0.3f).SetLink(gameObject);
-    }
-
-    private async void EffectInvulnerableTask()
-    {
-        PlayEffectAnimation(BonusType.Invulnerable);
-        DisallowTakingDamage();
-
-        await Task.Delay(TimeSpan.FromSeconds(1));
-
-        StopEffectAnimation(BonusType.Invulnerable);
-        AllowTakingDamage();
     }
 }

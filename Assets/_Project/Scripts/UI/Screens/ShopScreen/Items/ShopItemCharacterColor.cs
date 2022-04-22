@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class ShopItemCharacterColor : ShopItem
 {
     public override void Init(int index)
@@ -29,7 +31,21 @@ public class ShopItemCharacterColor : ShopItem
     public override void Select()
     {
         ColorManager.Instance.ChangePlayerColor(_icon);
-        SavingSystem.Instance.Data.CurSelectedCharacterColorIndex = _index;
+        SavingSystem.Instance.Data.Shop.CurSelectedCharacterColorIndex = _index;
         SavingSystem.Instance.Save();
+        base.Select();
+    }
+
+    public override void TryDisable()
+    {
+        if (_index == SavingSystem.Instance.Data.Shop.CurSelectedCharacterColorIndex) return;
+
+        base.TryDisable();
+    }
+
+    public override void TryEnable()
+    {
+        if (_index == SavingSystem.Instance.Data.Shop.CurSelectedCharacterColorIndex)
+            base.TryEnable();
     }
 }

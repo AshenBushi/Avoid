@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class ShopItemGameColor : ShopItem
 {
     public override void Init(int index)
@@ -29,7 +31,20 @@ public class ShopItemGameColor : ShopItem
     public override void Select()
     {
         ColorManager.Instance.ChangeUIColor(_icon);
-        SavingSystem.Instance.Data.CurSelectedGameColorIndex = _index;
+        SavingSystem.Instance.Data.Shop.CurSelectedGameColorIndex = _index;
         SavingSystem.Instance.Save();
+        base.Select();
+    }
+
+    public override void TryDisable()
+    {
+        base.TryDisable();
+        
+    }
+
+    public override void TryEnable()
+    {
+        if (_index == SavingSystem.Instance.Data.Shop.CurSelectedGameColorIndex)
+            base.TryEnable();
     }
 }

@@ -26,18 +26,28 @@ public class ShopSectionContent : MonoBehaviour
         ShopScreen.OnEnablingEvent += ShopItemsUpdate;
     }
 
+    private void Start()
+    {
+        ColorManager.Instance.OnPlayerColorChanged += TrySetEnableCurrentItems;
+        PlayerColorSetter.OnImageColorChangedEvent += TrySetEnableCurrentItems;
+    }
+
     private void OnDisable()
     {
         ShopScreen.OnEnablingEvent -= ShopItemsUpdate;
+        ColorManager.Instance.OnPlayerColorChanged -= TrySetEnableCurrentItems;
+        PlayerColorSetter.OnImageColorChangedEvent -= TrySetEnableCurrentItems;
     }
 
     private void ShopItemsUpdate()
     {
-        if (_isGetted)
-            for (int i = 0; i < _items.Count; i++)
-            {
-                _items[i].Init(i);
-            }
+        if (!_isGetted) return;
+
+        for (int i = 0; i < _items.Count; i++)
+        {
+            _items[i].Init(i);
+            _items[i].TryEnable();
+        }
     }
 
     private IEnumerator GetComponentsRoutine()
@@ -59,9 +69,27 @@ public class ShopSectionContent : MonoBehaviour
         for (int i = 0; i < _items.Count; i++)
         {
             _items[i].Init(i);
+            _items[i].OnItemSelectedEvent += DeselectAllItems;
+            _items[i].TryDisable();
         }
 
         _isGetted = true;
         OnEndedGettingComponents?.Invoke();
+    }
+
+    private void DeselectAllItems()
+    {
+        for (int i = 0; i < _items.Count; i++)
+        {
+            _items[i].TryDisable();
+        }
+    }
+
+    private void TrySetEnableCurrentItems()
+    {
+        for (int i = 0; i < _items.Count; i++)
+        {
+            _items[i].TryEnable();
+        }
     }
 }

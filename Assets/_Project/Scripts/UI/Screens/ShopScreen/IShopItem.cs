@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
 
 public interface IShopItem
 {
@@ -7,4 +6,7 @@ public interface IShopItem
     public void Init(int index);
     public void Buy();
     public void Select();
+    public void TryEnable();
+    public void TryDisable();
+    public event Action OnItemSelectedEvent;
 }

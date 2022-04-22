@@ -1,4 +1,6 @@
-﻿public class ShopItemCharacter : ShopItem
+﻿using UnityEngine;
+
+public class ShopItemCharacter : ShopItem
 {
     public override void Init(int index)
     {
@@ -29,7 +31,21 @@
     public override void Select()
     {
         ColorManager.Instance.ChangePlayerSkin();
-        SavingSystem.Instance.Data.CurSelectedCharacterIndex = _index;
+        SavingSystem.Instance.Data.Shop.CurSelectedCharacterIndex = _index;
         SavingSystem.Instance.Save();
+        base.Select();
+    }
+
+    public override void TryDisable()
+    {
+        if (_index == SavingSystem.Instance.Data.Shop.CurSelectedCharacterIndex) return;
+
+        base.TryDisable();
+    }
+
+    public override void TryEnable()
+    {
+        if (_index == SavingSystem.Instance.Data.Shop.CurSelectedCharacterIndex)
+            base.TryEnable();
     }
 }

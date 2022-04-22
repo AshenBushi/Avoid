@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class ShopItemBackground : ShopItem
 {
     public override void Init(int index)
@@ -15,7 +17,6 @@ public class ShopItemBackground : ShopItem
         _button.onClick.AddListener(Buy);
     }
 
-
     public override void Buy()
     {
         if (!_isLocked) return;
@@ -29,7 +30,15 @@ public class ShopItemBackground : ShopItem
 
     public override void Select()
     {
-        SavingSystem.Instance.Data.CurSelectedBackgroundIndex = _index;
+        SavingSystem.Instance.Data.Shop.CurSelectedBackgroundIndex = _index;
         SavingSystem.Instance.Save();
+        base.Select();
+    }
+
+    public override void TryDisable()
+    {
+        base.TryDisable();
+        if (_index == SavingSystem.Instance.Data.Shop.CurSelectedBackgroundIndex)
+            TryEnable();
     }
 }

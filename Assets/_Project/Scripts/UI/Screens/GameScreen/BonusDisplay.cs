@@ -16,8 +16,11 @@ public class BonusDisplay : MonoBehaviour
 
     public void ShowBonusIcon(BonusType buffType)
     {
-        _image.color = _bonusColors[(int) buffType];
-        _image.sprite = _bonusIcons[(int) buffType];
+        if (_bonusColors.Count >= (int)buffType)
+            _image.color = _bonusColors[(int)buffType];
+
+        if (_bonusIcons.Count >= (int)buffType)
+            _image.sprite = _bonusIcons[(int)buffType];
     }
 
     public void Clear()

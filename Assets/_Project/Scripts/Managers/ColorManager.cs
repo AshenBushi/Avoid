@@ -43,8 +43,8 @@ public class ColorManager : Singleton<ColorManager>
 
     public void ChangePlayerSkin()
     {
-        if (_playerSkinsSprites[SavingSystem.Instance.Data.CurSelectedCharacterIndex] != null)
-            OnPlayerSkinChange?.Invoke(_playerSkinsSprites[SavingSystem.Instance.Data.CurSelectedCharacterIndex]);
+        if (_playerSkinsSprites[SavingSystem.Instance.Data.Shop.CurSelectedCharacterIndex] != null)
+            OnPlayerSkinChange?.Invoke(_playerSkinsSprites[SavingSystem.Instance.Data.Shop.CurSelectedCharacterIndex]);
         else
             OnPlayerSkinChange?.Invoke(_playerSkinsSprites[0]);
     }
