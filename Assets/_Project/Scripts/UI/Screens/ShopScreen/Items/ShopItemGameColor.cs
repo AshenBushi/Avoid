@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class ShopItemGameColor : ShopItem
 {
     public override void Init(int index)
@@ -19,8 +17,13 @@ public class ShopItemGameColor : ShopItem
 
     public override void Buy()
     {
+        if (SavingSystem.Instance.Data.Shop.OpenedGameColors.Contains(_index))
+        {
+            Select();
+            return;
+        }
+
         if (!_isLocked) return;
-        if (SavingSystem.Instance.Data.Shop.OpenedGameColors.Contains(_index)) return;
         if (!Bank.Instance.TryWithdrawMoney(_price)) return;
 
         DisableLockedIcon();
@@ -38,8 +41,9 @@ public class ShopItemGameColor : ShopItem
 
     public override void TryDisable()
     {
+        if (_index == SavingSystem.Instance.Data.Shop.CurSelectedGameColorIndex) return;
+
         base.TryDisable();
-        
     }
 
     public override void TryEnable()

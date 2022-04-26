@@ -7,6 +7,7 @@ public class PlayerColorSetter : MonoBehaviour
 {
     private Image _image;
     private bool _isPlayerComponent = false;
+    private bool _isOutlineCurrentColor = false;
 
     private Color PlayerColor => ColorManager.Instance.PlayerColor;
     public Image Image => _image;
@@ -20,6 +21,9 @@ public class PlayerColorSetter : MonoBehaviour
 
         if (GetComponentInParent<Player>())
             _isPlayerComponent = true;
+
+        if (GetComponent<ShopOutlineCurrentColor>())
+            _isOutlineCurrentColor = true;
     }
 
     private void OnDisable()
@@ -42,6 +46,12 @@ public class PlayerColorSetter : MonoBehaviour
 
         if (!_isPlayerComponent)
         {
+            if (_isOutlineCurrentColor)
+            {
+                _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, 1f);
+                return;
+            }
+
             _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, 0.4f);
             OnImageColorChangedEvent?.Invoke();
             return;

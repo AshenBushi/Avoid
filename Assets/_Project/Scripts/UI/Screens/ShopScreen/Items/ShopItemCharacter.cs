@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class ShopItemCharacter : ShopItem
+﻿public class ShopItemCharacter : ShopItem
 {
     public override void Init(int index)
     {
@@ -19,12 +17,20 @@ public class ShopItemCharacter : ShopItem
 
     public override void Buy()
     {
+        if (SavingSystem.Instance.Data.Shop.OpenedCharacters.Contains(_index))
+        {
+            Select();
+            return;
+        }
+
         if (!_isLocked) return;
-        if (SavingSystem.Instance.Data.Shop.OpenedCharacters.Contains(_index)) return;
+
         if (!Bank.Instance.TryWithdrawMoney(_price)) return;
 
         DisableLockedIcon();
+
         SavingSystem.Instance.Data.Shop.OpenedCharacters.Add(_index);
+
         Select();
     }
 
