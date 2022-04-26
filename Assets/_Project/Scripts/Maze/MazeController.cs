@@ -25,7 +25,7 @@ public class MazeController : MonoBehaviour
 
     public void Spawn()
     {
-        if (_isCreated) return;
+        if (_isCreated || UIManager.Instance.GameOverScreen.IsGameOver) return;
 
         _isCreated = true;
         MazeDestroyEvent.AddListener(Clear);

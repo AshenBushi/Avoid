@@ -16,12 +16,15 @@ public class GameOverScreen : UIScreen
 
     private bool _isGameContinue = false;
 
+    public bool IsGameOver { get; private set; } = false;
+
     private void OnAdClosedInterstitial(object sender, EventArgs e)
     {
         Debug.Log("Interstitial Worked");
 
         AdManager.Instance.Interstitial.OnAdClosed -= OnAdClosedInterstitial;
         SceneManager.LoadScene(0);
+        IsGameOver = false;
     }
 
     private void OnAdClosedRewarded(object sender, EventArgs e)
@@ -31,11 +34,15 @@ public class GameOverScreen : UIScreen
         AdManager.Instance.RewardedAd.OnAdClosed -= OnAdClosedRewarded;
 
         Disable();
+        IsGameOver = false;
     }
 
     public override void Enable()
     {
         base.Enable();
+
+        IsGameOver = true;
+        MazeController.MazeDestroyEvent?.Invoke();
 
         if (_isGameContinue)
             _continueButton.gameObject.SetActive(false);
@@ -64,6 +71,8 @@ public class GameOverScreen : UIScreen
     {
         base.Disable();
 
+        IsGameOver = false;
+
         UIManager.Instance.GameScreen.Enable();
         SpawnersManager.Instance.StartSpawning();
     }
@@ -78,14 +87,17 @@ public class GameOverScreen : UIScreen
         }
         else
         {
+            IsGameOver = false;
             SceneManager.LoadScene(0);
         }
+
     }
 
     public void ContinueGame()
     {
         if (_isGameContinue) return;
 
+        IsGameOver = false;
         AdManager.Instance.RewardedAd.OnAdClosed += OnAdClosedRewarded;
         AdManager.Instance.ShowRewardVideo();
         _isGameContinue = true;
