@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum StateEnemy
@@ -12,11 +13,13 @@ public enum StateEnemy
 public class SpawnerEnemy : Spawner, ISpawnerEnemyState
 {
     [SerializeField] private ScoreCounter _scoreCounter;
-
+    [SerializeField] private List<Item> _enemyTemplatesByCurrentWave;
     private Player _player;
     private StateEnemy _state;
+    private int _newItemIndexCounter = 0;
     private float _time;
     private bool _isStateTimerOn;
+
 
     protected override void FixedUpdate()
     {
@@ -104,6 +107,25 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
 
             _pool[i].Deactivation();
         }
+    }
+
+    protected override void OnNextWave()
+    {
+        var itemNextWave = _enemyTemplatesByCurrentWave[_scoreCounter.WaveCounter - 2];
+
+        if (itemNextWave == null || _pool.Contains(itemNextWave))
+            return;
+
+        var newItem = Instantiate(itemNextWave, _container);
+        newItem.gameObject.SetActive(false);
+
+        _pool.Add(newItem);
+
+        var tempItem = _pool[_newItemIndexCounter];
+        _pool[_newItemIndexCounter] = newItem;
+        _pool[_pool.Count - 1] = tempItem;
+
+        _newItemIndexCounter++;
     }
 
     private void OnEndedMovingEnemy(Item enemy)

@@ -9984,6 +9984,10 @@ MonoBehaviour:
   _defaultDelay: 0.9
   _defaultMoveDuration: 2
   _scoreCounter: {fileID: 733866295}
+  _enemyTemplatesByCurrentWave:
+  - {fileID: -8099616708744229200, guid: ff7e6065e4a11714086ab8b1dc9b9651, type: 3}
+  - {fileID: -8099616708744229200, guid: f2f687c603d671442a9f6b718af1ffe8, type: 3}
+  - {fileID: -8099616708744229200, guid: 6e1963f136dac7c4fa417181208b3a56, type: 3}
 --- !u!4 &1328726090
 Transform:
   m_ObjectHideFlags: 0

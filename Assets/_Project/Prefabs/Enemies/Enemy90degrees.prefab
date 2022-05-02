@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8099616708744229200}
   - component: {fileID: 7617799640190098275}
   m_Layer: 5
-  m_Name: Enemy
+  m_Name: Enemy90degrees
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

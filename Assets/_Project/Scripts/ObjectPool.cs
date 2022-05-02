@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ObjectPool<T> : MonoBehaviour where T: Component
+public class ObjectPool<T> : MonoBehaviour where T : Component
 {
     [SerializeField] protected int _poolCount;
     [SerializeField] protected T _template;

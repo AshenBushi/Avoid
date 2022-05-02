@@ -20,7 +20,7 @@ public class MazeController : MonoBehaviour
     private void Awake()
     {
         _mazeSpawner = GetComponentInChildren<MazeSpawnerCells>();
-        ScoreCounter.OnMazeActivationEvent.AddListener(Spawn);
+        ScoreCounter.StartNextWaveEvent.AddListener(Spawn);
     }
 
     public void Spawn()

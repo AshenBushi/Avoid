@@ -12,10 +12,11 @@ public class ScoreCounter : MonoBehaviour
     private int _waveCounter = 1;
 
     public int Score { get; private set; } = 0;
+    public int WaveCounter => _waveCounter;
 
-    public static UnityEvent OnMazeActivationEvent = new UnityEvent();
+    public static UnityEvent StartNextWaveEvent = new UnityEvent();
 
-    public const int SCORE_FOR_START_MAZE = 100;
+    public const int SCORE_FOR_START_MAZE = 1;
 
     private void Awake()
     {
@@ -43,7 +44,7 @@ public class ScoreCounter : MonoBehaviour
 
         if (Score % SCORE_FOR_START_MAZE == 0 && Score != 0)
         {
-            OnMazeActivationEvent?.Invoke();
+            StartNextWaveEvent?.Invoke();
         }
     }
 
