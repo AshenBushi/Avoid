@@ -4,16 +4,16 @@ using UnityEngine.Events;
 
 public abstract class Item : MonoBehaviour
 {
-    private RectTransform _transform;
-    private Vector3 _startPosition;
-    private Vector3 _endPosition;
-    private float _moveDuration;
-    private float _moverTimeScaleDefault;
+    protected RectTransform _transform;
+    protected Vector3 _startPosition;
+    protected Vector3 _endPosition;
+    protected float _moveDuration;
+    protected float _moverTimeScaleDefault;
     protected int _damage;
 
-    protected Tween Mover;
+    protected Tween _mover;
 
-    public event UnityAction<Item> OnEndedMoving;
+    public UnityEvent<Item> OnEndedMoving = new UnityEvent<Item>();
 
     protected virtual void Awake()
     {
@@ -33,14 +33,16 @@ public abstract class Item : MonoBehaviour
 
     public virtual void SetSpeedUp()
     {
-        Mover.timeScale = _moverTimeScaleDefault;
-        Mover.timeScale *= 1.4f;
+        if (_mover == null) return;
+        _mover.timeScale = _moverTimeScaleDefault;
+        _mover.timeScale *= 1.4f;
     }
 
     public virtual void SetSpeedDown()
     {
-        Mover.timeScale = _moverTimeScaleDefault;
-        Mover.timeScale /= 1.5f;
+        if (_mover == null) return;
+        _mover.timeScale = _moverTimeScaleDefault;
+        _mover.timeScale /= 1.5f;
     }
 
     public virtual void SetDamageDone(int damage)
@@ -52,7 +54,7 @@ public abstract class Item : MonoBehaviour
     {
         if (!gameObject.activeSelf) return;
 
-        Mover.Kill();
+        _mover.Kill();
         EndMoving();
         gameObject.SetActive(false);
     }
@@ -63,18 +65,17 @@ public abstract class Item : MonoBehaviour
     {
         _transform.localPosition = _startPosition;
 
-        Mover = _transform.DOLocalMove(_endPosition, _moveDuration).SetEase(Ease.Linear).SetLink(gameObject);
-        _moverTimeScaleDefault = Mover.timeScale;
+        _mover = _transform.DOLocalMove(_endPosition, _moveDuration).SetEase(Ease.Linear).SetLink(gameObject);
+        _moverTimeScaleDefault = _mover.timeScale;
 
-        Mover.OnComplete(() =>
+        _mover.OnComplete(() =>
         {
             EndMoving();
-
             gameObject.SetActive(false);
         });
     }
 
-    protected virtual void EndMoving()
+    public virtual void EndMoving()
     {
         OnEndedMoving?.Invoke(this);
     }

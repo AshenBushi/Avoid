@@ -9981,7 +9981,7 @@ MonoBehaviour:
   _bottomSide:
     _firstPoint: {x: -500, y: -510, z: 0}
     _lastPoint: {x: 500, y: -510, z: 0}
-  _defaultDelay: 0.9
+  _defaultDelay: 1.4
   _defaultMoveDuration: 2
   _scoreCounter: {fileID: 733866295}
   _enemyTemplatesByCurrentWave:
@@ -15177,7 +15177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3803116010217440010, guid: 891e27e20dace804c87293acc6fdbf98, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3803116010217440010, guid: 891e27e20dace804c87293acc6fdbf98, type: 3}
       propertyPath: m_AnchorMax.x

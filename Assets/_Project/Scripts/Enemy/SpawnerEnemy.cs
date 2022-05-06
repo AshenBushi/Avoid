@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum StateEnemy
@@ -14,12 +15,15 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
 {
     [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private List<Item> _enemyTemplatesByCurrentWave;
+
     private Player _player;
     private StateEnemy _state;
-    private int _newItemIndexCounter = 0;
     private float _time;
     private bool _isStateTimerOn;
 
+    private const int PERCENT_LIGHTNING_MOVE = 5;
+    private const int PERCENT_DEGREES_MOVE = 8;
+    private const int PERCENT_SPIRAL_MOVE = 11;
 
     protected override void FixedUpdate()
     {
@@ -42,23 +46,43 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
     {
         GetRandomPositions(out var startPosition, out var endPosition);
 
-        if (TryGetObject(out var enemy))
-        {
-            enemy.Init(startPosition, endPosition, _moveDuration);
-            enemy.SetDamageDone(1);
-            enemy.OnEndedMoving += OnEndedMovingEnemy;
+        Item enemy = null;
+        Item enemyNew = null;
+        var random = UnityEngine.Random.Range(0, 101);
 
-            if (_isStateTimerOn)
+        if (random < PERCENT_LIGHTNING_MOVE)
+            enemyNew = GetEnemyByTypeFromPool(startPosition, endPosition, EnemyMovementType.Lightning);
+        else if (random > PERCENT_LIGHTNING_MOVE && random <= PERCENT_DEGREES_MOVE)
+            enemyNew = GetEnemyByTypeFromPool(startPosition, endPosition, EnemyMovementType.Degrees90);
+        else if (random > PERCENT_DEGREES_MOVE && random <= PERCENT_SPIRAL_MOVE)
+            enemyNew = GetEnemyByTypeFromPool(startPosition, endPosition, EnemyMovementType.Spiral);
+
+        if (enemyNew != null)
+            enemy = enemyNew;
+        else
+        {
+            do
             {
-                switch (_state)
-                {
-                    case StateEnemy.slowing:
-                        enemy.SetSpeedDown();
-                        break;
-                    case StateEnemy.acceleration:
-                        enemy.SetSpeedUp();
-                        break;
-                }
+                TryGetObject(out var enemyDefault);
+                enemy = enemyDefault;
+            }
+            while (enemy == null);
+        }
+
+        enemy.Init(startPosition, endPosition, _moveDuration);
+        enemy.SetDamageDone(1);
+        enemy.OnEndedMoving.AddListener(OnEndedMovingEnemy);
+
+        if (_isStateTimerOn)
+        {
+            switch (_state)
+            {
+                case StateEnemy.slowing:
+                    enemy.SetSpeedDown();
+                    break;
+                case StateEnemy.acceleration:
+                    enemy.SetSpeedUp();
+                    break;
             }
         }
 
@@ -87,6 +111,21 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
         _isStateTimerOn = true;
     }
 
+    private Item GetEnemyByTypeFromPool(Vector3 startPos, Vector3 endPos, EnemyMovementType type)
+    {
+        Item curObj = null;
+
+        foreach (var currentObject in _pool.Where(currentObject =>
+                        currentObject.GetComponent<Enemy>().MovementType == type &&
+                        currentObject.gameObject.activeSelf == false))
+        {
+            curObj = currentObject;
+            return curObj;
+        }
+
+        return curObj;
+    }
+
     private void IncreaseDifficult()
     {
         var tempValue = _defaultMoveDuration - 0.4f * (_scoreCounter.Score / 100);
@@ -102,8 +141,8 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
         {
             if (!_pool[i].gameObject.activeSelf) continue;
 
-            _pool[i].OnEndedMoving -= OnEndedMovingEnemy;
-            _pool[i].OnEndedMoving += OnEndingMovingEvemyWithoutScore;
+            _pool[i].OnEndedMoving.RemoveListener(OnEndedMovingEnemy);
+            _pool[i].OnEndedMoving.AddListener(OnEndingMovingEvemyWithoutScore);
 
             _pool[i].Deactivation();
         }
@@ -111,7 +150,9 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
 
     protected override void OnNextWave()
     {
-        var itemNextWave = _enemyTemplatesByCurrentWave[_scoreCounter.WaveCounter - 2];
+        if (_enemyTemplatesByCurrentWave.Count == 0) return;
+
+        var itemNextWave = _enemyTemplatesByCurrentWave[0];
 
         if (itemNextWave == null || _pool.Contains(itemNextWave))
             return;
@@ -119,23 +160,18 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
         var newItem = Instantiate(itemNextWave, _container);
         newItem.gameObject.SetActive(false);
 
-        _pool.Add(newItem);
-
-        var tempItem = _pool[_newItemIndexCounter];
-        _pool[_newItemIndexCounter] = newItem;
-        _pool[_pool.Count - 1] = tempItem;
-
-        _newItemIndexCounter++;
+        _pool.Insert(2, newItem);
+        _enemyTemplatesByCurrentWave.RemoveAt(0);
     }
 
     private void OnEndedMovingEnemy(Item enemy)
     {
         _scoreCounter.AddScore();
-        enemy.OnEndedMoving -= OnEndedMovingEnemy;
+        enemy.OnEndedMoving.RemoveListener(OnEndedMovingEnemy);
     }
 
     private void OnEndingMovingEvemyWithoutScore(Item enemy)
     {
-        enemy.OnEndedMoving -= OnEndedMovingEnemy;
+        enemy.OnEndedMoving.RemoveListener(OnEndingMovingEvemyWithoutScore);
     }
 }

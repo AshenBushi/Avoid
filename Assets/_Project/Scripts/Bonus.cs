@@ -15,7 +15,7 @@ public abstract class Bonus : Item
         _player = player;
 
         UseBonus();
-        Mover.Kill();
+        _mover.Kill();
         gameObject.SetActive(false);
     }
 

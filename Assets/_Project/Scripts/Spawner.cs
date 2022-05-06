@@ -38,8 +38,8 @@ public class Spawner : ObjectPool<Item>, ISpawner
 
         if (_timer >= _spawnDelay)
         {
-            Spawn();
             _timer = 0;
+            Spawn();
         }
     }
 

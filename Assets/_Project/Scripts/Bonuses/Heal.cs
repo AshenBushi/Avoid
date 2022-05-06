@@ -10,7 +10,7 @@ public class Heal : Bonus
         SoundManager.Instance.PlaySound(Sound.Heal);
         
         player.Heal();
-        Mover.Kill();
+        _mover.Kill();
         gameObject.SetActive(false);
     }
 
