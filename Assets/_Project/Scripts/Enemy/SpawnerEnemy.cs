@@ -21,9 +21,9 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
     private float _time;
     private bool _isStateTimerOn;
 
-    private const int PERCENT_LIGHTNING_MOVE = 5;
-    private const int PERCENT_DEGREES_MOVE = 8;
-    private const int PERCENT_SPIRAL_MOVE = 11;
+    private const int PERCENT_LIGHTNING_MOVE = 19;
+    private const int PERCENT_DEGREES_MOVE = 29;
+    private const int PERCENT_SPIRAL_MOVE = 39;
 
     protected override void FixedUpdate()
     {
