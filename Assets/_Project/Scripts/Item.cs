@@ -8,12 +8,11 @@ public abstract class Item : MonoBehaviour
     protected Vector3 _startPosition;
     protected Vector3 _endPosition;
     protected float _moveDuration;
-    protected float _moverTimeScaleDefault;
     protected int _damage;
 
     protected Tween _mover;
 
-    public UnityEvent<Item> OnEndedMoving = new UnityEvent<Item>();
+    [HideInInspector] public UnityEvent<Item> OnEndedMoving = new UnityEvent<Item>();
 
     protected virtual void Awake()
     {
@@ -33,16 +32,14 @@ public abstract class Item : MonoBehaviour
 
     public virtual void SetSpeedUp()
     {
-        if (_mover == null) return;
-        _mover.timeScale = _moverTimeScaleDefault;
-        _mover.timeScale *= 1.4f;
+        if (_mover != null)
+            _mover.timeScale = 1.5f;
     }
 
     public virtual void SetSpeedDown()
     {
-        if (_mover == null) return;
-        _mover.timeScale = _moverTimeScaleDefault;
-        _mover.timeScale /= 1.5f;
+        if (_mover != null)
+            _mover.timeScale = 0.8f;
     }
 
     public virtual void SetDamageDone(int damage)
@@ -66,7 +63,6 @@ public abstract class Item : MonoBehaviour
         _transform.localPosition = _startPosition;
 
         _mover = _transform.DOLocalMove(_endPosition, _moveDuration).SetEase(Ease.Linear).SetLink(gameObject);
-        _moverTimeScaleDefault = _mover.timeScale;
 
         _mover.OnComplete(() =>
         {

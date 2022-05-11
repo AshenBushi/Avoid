@@ -53,7 +53,7 @@ public class SpawnerEnemy : Spawner, ISpawnerEnemyState
         if (random < PERCENT_LIGHTNING_MOVE)
             enemyNew = GetEnemyByTypeFromPool(startPosition, endPosition, EnemyMovementType.Lightning);
         else if (random > PERCENT_LIGHTNING_MOVE && random <= PERCENT_DEGREES_MOVE)
-            enemyNew = GetEnemyByTypeFromPool(startPosition, endPosition, EnemyMovementType.Degrees90);
+            enemyNew = GetEnemyByTypeFromPool(startPosition, endPosition, EnemyMovementType.Angles);
         else if (random > PERCENT_DEGREES_MOVE && random <= PERCENT_SPIRAL_MOVE)
             enemyNew = GetEnemyByTypeFromPool(startPosition, endPosition, EnemyMovementType.Spiral);
 

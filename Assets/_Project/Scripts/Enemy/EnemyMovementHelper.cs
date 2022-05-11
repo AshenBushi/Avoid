@@ -24,4 +24,11 @@ public class EnemyMovementHelper : MonoBehaviour
                 break;
         }
     }
+
+    public void DestroyAnimator()
+    {
+        _animator.enabled = false;
+        Destroy(_animator);
+        _animator = null;
+    }
 }

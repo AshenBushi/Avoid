@@ -123,7 +123,7 @@ MonoBehaviour:
   _movementType: 3
   _movementHelperTemplate: {fileID: 8144797802265925176, guid: 89398b68ae3bf9240a7d4751b097f558, type: 3}
   _movementDuration: 3
-  _rotationRadiusSpiral: 170
+  _rotationRadiusSpiral: 180
 --- !u!114 &7617799640190098275
 MonoBehaviour:
   m_ObjectHideFlags: 0

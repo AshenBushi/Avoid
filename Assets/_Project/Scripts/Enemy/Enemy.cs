@@ -5,8 +5,16 @@ public enum EnemyMovementType
 {
     Default,
     Lightning,
-    Degrees90,
+    Angles,
     Spiral
+}
+
+public enum EnemyMovementSide
+{
+    Top,
+    Bottom,
+    Left,
+    Right,
 }
 
 public class Enemy : Item
@@ -17,6 +25,7 @@ public class Enemy : Item
     [SerializeField] private float _rotationRadiusSpiral = 150f;
 
     private EnemyMovementHelper _movementHelper;
+    private EnemyMovementPattern _movementPattern;
     private Sequence _sequenceMove;
     private Transform _defaultParent;
 
@@ -31,11 +40,8 @@ public class Enemy : Item
             gameObject.SetActive(false);
             OnEndedMoving.RemoveAllListeners();
 
-            if (_sequenceMove != null)
-            {
-                _sequenceMove.Kill();
-                _sequenceMove = null;
-            }
+            if (_movementPattern != null)
+                _movementPattern.KillSequence();
 
             if (_movementHelper != null)
             {
@@ -47,11 +53,10 @@ public class Enemy : Item
 
     public override void EndMoving()
     {
-        if (_sequenceMove != null)
-        {
-            _sequenceMove.Kill();
-            _sequenceMove = null;
-        }
+        gameObject.SetActive(false);
+
+        if (_movementPattern != null)
+            _movementPattern.KillSequence();
 
         if (_movementHelper != null)
         {
@@ -70,127 +75,150 @@ public class Enemy : Item
                 base.Move();
                 break;
             case EnemyMovementType.Lightning:
-                LightningMovement();
+                SetLightningMovement();
                 break;
-            case EnemyMovementType.Degrees90:
-                Degrees90Movement();
+            case EnemyMovementType.Angles:
+                SetAnglesMovement();
                 break;
             case EnemyMovementType.Spiral:
-                SpiralMovement();
+                SetSpiralMovement();
                 break;
         }
     }
 
-    private void LightningMovement()
+    public override void SetSpeedUp()
     {
-        _mover.Kill();
-        _defaultParent = _transform.parent;
-        var fastDuration = _movementDuration / 4f;
+        if (_movementPattern != null)
+            _movementPattern.SetSequenceTimeScale(1.5f);
 
-        _movementHelper = Instantiate(_movementHelperTemplate, transform.parent);
-        _movementHelper.transform.localPosition = new Vector3(-200f, -700f, 0);
-
-        _transform.SetParent(_movementHelper.transform);
-
-        _transform.localPosition = new Vector3(0, 0, 0);
-
-        _sequenceMove = DOTween.Sequence();
-
-        _sequenceMove.Append(_movementHelper.transform
-                    .DOLocalMove(new Vector3(250, 70), fastDuration)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(gameObject));
-
-        _sequenceMove.Append(_movementHelper.transform
-                    .DOLocalMove(new Vector3(-250, 150), fastDuration / 2f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(gameObject));
-
-        _sequenceMove.Append(_movementHelper.transform
-                    .DOLocalMove(new Vector3(250, 250), fastDuration / 2f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(gameObject));
-
-        _sequenceMove.Append(_movementHelper.transform
-                    .DOLocalMove(new Vector3(-250, 650), fastDuration / 2f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(gameObject))
-                    .OnComplete(() =>
-                    {
-                        _transform.SetParent(_defaultParent);
-                        EndMoving();
-                        gameObject.SetActive(false);
-                    });
+        base.SetSpeedUp();
     }
 
-    private void Degrees90Movement()
+    public override void SetSpeedDown()
+    {
+        if (_movementPattern != null)
+            _movementPattern.SetSequenceTimeScale(0.75f);
+
+        base.SetSpeedDown();
+    }
+
+    private Vector3 GetPositionBySide(EnemyMovementSide side)
+    {
+        switch (side)
+        {
+            case EnemyMovementSide.Top:
+                return new Vector3(-250f, 700f, 0);
+            case EnemyMovementSide.Bottom:
+                return new Vector3(-250f, -700f, 0);
+            case EnemyMovementSide.Left:
+                return new Vector3(-650f, 250f, 0);
+            case EnemyMovementSide.Right:
+                return new Vector3(650f, 250f, 0);
+        }
+
+        return new Vector3(-200f, -700f, 0);
+    }
+
+    private void SetLightningMovement()
     {
         _mover.Kill();
         _defaultParent = _transform.parent;
-        var fastDuration = _movementDuration / 4f;
+
+        var side = (EnemyMovementSide)Random.Range(0, 4);
 
         _movementHelper = Instantiate(_movementHelperTemplate, transform.parent);
-        _movementHelper.transform.localPosition = new Vector3(-200f, -700f, 0);
+        _movementHelper.transform.localPosition = GetPositionBySide(side);
 
         _transform.SetParent(_movementHelper.transform);
         _transform.localPosition = new Vector3(0, 0, 0);
 
         _sequenceMove = DOTween.Sequence();
 
-        _sequenceMove.Append(_movementHelper.transform
-                    .DOLocalMoveY(50, fastDuration)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(gameObject));
+        _movementPattern = new EnemyPatternMovementLightning(this, _movementHelper, _sequenceMove, _defaultParent, _movementDuration);
 
-        _sequenceMove.Append(_movementHelper.transform
-                    .DOLocalMoveX(250, fastDuration / 2f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(gameObject));
-
-        _sequenceMove.Append(_movementHelper.transform
-                    .DOLocalMoveY(300, fastDuration / 2f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(gameObject));
-
-        _sequenceMove.Append(_movementHelper.transform
-                    .DOLocalMoveX(-250, fastDuration / 2f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(gameObject));
-
-        _sequenceMove.Append(_movementHelper.transform
-                    .DOLocalMoveY(650, fastDuration)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(gameObject)).OnComplete(() =>
-                    {
-                        _transform.SetParent(_defaultParent);
-                        EndMoving();
-                        gameObject.SetActive(false);
-                    });
+        switch (side)
+        {
+            case EnemyMovementSide.Top:
+                _movementPattern.MovementSideTop();
+                break;
+            case EnemyMovementSide.Bottom:
+                _movementPattern.MovementSideBottom();
+                break;
+            case EnemyMovementSide.Left:
+                _movementPattern.MovementSideLeft();
+                break;
+            case EnemyMovementSide.Right:
+                _movementPattern.MovementSideRight();
+                break;
+        }
     }
 
-    private void SpiralMovement()
+    private void SetAnglesMovement()
+    {
+        _mover.Kill();
+        _defaultParent = _transform.parent;
+
+        var side = (EnemyMovementSide)Random.Range(0, 4);
+
+        _movementHelper = Instantiate(_movementHelperTemplate, transform.parent);
+        _movementHelper.transform.localPosition = GetPositionBySide(side);
+
+        _transform.SetParent(_movementHelper.transform);
+        _transform.localPosition = new Vector3(0, 0, 0);
+
+        _sequenceMove = DOTween.Sequence();
+
+        _movementPattern = new EnemyPatternMovementAngles(this, _movementHelper, _sequenceMove, _defaultParent, _movementDuration);
+
+        switch (side)
+        {
+            case EnemyMovementSide.Top:
+                _movementPattern.MovementSideTop();
+                break;
+            case EnemyMovementSide.Bottom:
+                _movementPattern.MovementSideBottom();
+                break;
+            case EnemyMovementSide.Left:
+                _movementPattern.MovementSideLeft();
+                break;
+            case EnemyMovementSide.Right:
+                _movementPattern.MovementSideRight();
+                break;
+        }
+    }
+
+    private void SetSpiralMovement()
     {
         _mover.Kill();
 
         _defaultParent = _transform.parent;
 
+        var side = (EnemyMovementSide)Random.Range(0, 4);
+
         _movementHelper = Instantiate(_movementHelperTemplate, transform.parent);
-        _movementHelper.transform.localPosition = new Vector3(0, -600f, 0);
+        _movementHelper.transform.localPosition = GetPositionBySide(side);
 
         _transform.SetParent(_movementHelper.transform);
         _transform.localPosition = new Vector3(0, _rotationRadiusSpiral, 0);
 
         _movementHelper.PlayAnimation(HelperAnimationType.Rotation);
 
-        _movementHelper.transform
-                    .DOLocalMoveY(650, _movementDuration)
-                    .SetEase(Ease.Linear)
-                    .SetLink(gameObject)
-                    .OnComplete(() =>
-                    {
-                        _transform.SetParent(_defaultParent);
-                        EndMoving();
-                        gameObject.SetActive(false);
-                    });
+        _movementPattern = new EnemyPatternMovementSpiral(this, _movementHelper, _defaultParent, _movementDuration);
+
+        switch (side)
+        {
+            case EnemyMovementSide.Top:
+                _movementPattern.MovementSideTop();
+                break;
+            case EnemyMovementSide.Bottom:
+                _movementPattern.MovementSideBottom();
+                break;
+            case EnemyMovementSide.Left:
+                _movementPattern.MovementSideLeft();
+                break;
+            case EnemyMovementSide.Right:
+                _movementPattern.MovementSideRight();
+                break;
+        }
     }
 }
