@@ -8,48 +8,48 @@ public class EnemyPatternMovementAngles : EnemyMovementPattern
         _enemy = enemy;
         _helper = helper;
         _sequence = sequence;
-        _duration = duration;
+        _duration = duration / 4f;
         _defaultParent = defaultParent;
     }
 
     public override void MovementSideTop()
     {
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(250, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(250, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveX(250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(_enemy.gameObject));
-
-
-        _sequence.Append(_helper.transform
-                    .DOLocalMoveY(50, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(_enemy.gameObject));
-
-        _sequence.Append(_helper.transform
-                    .DOLocalMoveX(-250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveX(0, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(-100, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(50, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveX(250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveX(-250, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(-600, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(-100, _duration)
+                    .SetEase(Ease.Linear)
+                    .SetLink(_enemy.gameObject));
+
+        _sequence.Append(_helper.transform
+                    .DOLocalMoveX(0, _duration)
+                    .SetEase(Ease.Linear)
+                    .SetLink(_enemy.gameObject));
+
+
+        _sequence.Append(_helper.transform
+                    .DOLocalMoveY(-600, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject)).OnComplete(() =>
                     {
                         _enemy.EndMoving();
@@ -59,41 +59,41 @@ public class EnemyPatternMovementAngles : EnemyMovementPattern
     public override void MovementSideBottom()
     {
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(-100, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(-100, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveX(250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(_enemy.gameObject));
-
-
-        _sequence.Append(_helper.transform
-                    .DOLocalMoveY(50, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(_enemy.gameObject));
-
-        _sequence.Append(_helper.transform
-                    .DOLocalMoveX(-250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveX(0, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(250, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(50, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveX(250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveX(-250, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(600, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(250, _duration)
+                    .SetEase(Ease.Linear)
+                    .SetLink(_enemy.gameObject));
+
+        _sequence.Append(_helper.transform
+                    .DOLocalMoveX(0, _duration)
+                    .SetEase(Ease.Linear)
+                    .SetLink(_enemy.gameObject));
+
+
+        _sequence.Append(_helper.transform
+                    .DOLocalMoveY(600, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject)).OnComplete(() =>
                     {
                         _enemy.EndMoving();
@@ -103,52 +103,41 @@ public class EnemyPatternMovementAngles : EnemyMovementPattern
     public override void MovementSideLeft()
     {
         _sequence.Append(_helper.transform
-                   .DOLocalMoveX(-200, _duration / 4f)
-                   .SetEase(Ease.OutQuart)
+                   .DOLocalMoveX(-250, _duration)
+                   .SetEase(Ease.Linear)
                    .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(-200, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(0, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveX(0, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveX(0, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(_enemy.gameObject));
-
-
-        _sequence.Append(_helper.transform
-                    .DOLocalMoveX(150, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(_enemy.gameObject));
-
-        _sequence.Append(_helper.transform
-                    .DOLocalMoveY(-250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(250, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveX(300, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveX(250, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(0, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveX(600, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveX(600, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject)).OnComplete(() =>
                     {
                         _enemy.EndMoving();
@@ -158,52 +147,41 @@ public class EnemyPatternMovementAngles : EnemyMovementPattern
     public override void MovementSideRight()
     {
         _sequence.Append(_helper.transform
-                  .DOLocalMoveX(200, _duration / 4f)
-                  .SetEase(Ease.OutQuart)
+                  .DOLocalMoveX(250, _duration)
+                  .SetEase(Ease.Linear)
                   .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(-200, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(0, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveX(0, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveX(0, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(_enemy.gameObject));
-
-
-        _sequence.Append(_helper.transform
-                    .DOLocalMoveX(-150, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
-                    .SetLink(_enemy.gameObject));
-
-        _sequence.Append(_helper.transform
-                    .DOLocalMoveY(-250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(250, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveX(-300, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveX(-250, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveY(250, _duration / 5f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveY(0, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
 
         _sequence.Append(_helper.transform
-                    .DOLocalMoveX(-600, _duration / 4f)
-                    .SetEase(Ease.OutQuart)
+                    .DOLocalMoveX(-600, _duration)
+                    .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject)).OnComplete(() =>
                     {
                         _enemy.EndMoving();

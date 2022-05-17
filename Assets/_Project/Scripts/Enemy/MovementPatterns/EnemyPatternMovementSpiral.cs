@@ -7,7 +7,7 @@ public class EnemyPatternMovementSpiral : EnemyMovementPattern
     {
         _enemy = enemy;
         _helper = helper;
-        _duration = duration;
+        _duration = duration * 1.3f;
         _defaultParent = defaultParent;
     }
 
