@@ -15,7 +15,7 @@ public class EnemyPatternMovementLightning : EnemyMovementPattern
     public override void MovementSideTop()
     {
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(250, 150), _duration)
+                    .DOLocalMove(new Vector3(250, 250), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
@@ -30,7 +30,12 @@ public class EnemyPatternMovementLightning : EnemyMovementPattern
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(-250, -650), _duration)
+                    .DOLocalMove(new Vector3(-250, -350), _duration)
+                    .SetEase(Ease.Linear)
+                    .SetLink(_enemy.gameObject));
+
+        _sequence.Append(_helper.transform
+                    .DOLocalMove(new Vector3(250, -550), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject))
                     .OnComplete(() =>
@@ -42,12 +47,12 @@ public class EnemyPatternMovementLightning : EnemyMovementPattern
     public override void MovementSideBottom()
     {
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(250, -150), _duration)
+                    .DOLocalMove(new Vector3(250, -250), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(-250, 50), _duration)
+                    .DOLocalMove(new Vector3(-250, -50), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
@@ -57,7 +62,12 @@ public class EnemyPatternMovementLightning : EnemyMovementPattern
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(-250, 650), _duration)
+                    .DOLocalMove(new Vector3(-250, 350), _duration)
+                    .SetEase(Ease.Linear)
+                    .SetLink(_enemy.gameObject));
+
+        _sequence.Append(_helper.transform
+                    .DOLocalMove(new Vector3(250, 550), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject))
                     .OnComplete(() =>
@@ -69,22 +79,27 @@ public class EnemyPatternMovementLightning : EnemyMovementPattern
     public override void MovementSideLeft()
     {
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(-150, -150), _duration)
+                    .DOLocalMove(new Vector3(-250, -250), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(0, 250), _duration)
+                    .DOLocalMove(new Vector3(-50, 250), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(150, -150), _duration)
+                    .DOLocalMove(new Vector3(150, -250), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(550, 250), _duration)
+                    .DOLocalMove(new Vector3(350, 250), _duration)
+                    .SetEase(Ease.Linear)
+                    .SetLink(_enemy.gameObject));
+
+        _sequence.Append(_helper.transform
+                    .DOLocalMove(new Vector3(550, -250), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject))
                     .OnComplete(() =>
@@ -96,22 +111,27 @@ public class EnemyPatternMovementLightning : EnemyMovementPattern
     public override void MovementSideRight()
     {
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(150, -150), _duration)
+                    .DOLocalMove(new Vector3(250, -250), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(0, 250), _duration)
+                    .DOLocalMove(new Vector3(50, 250), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(-150, -150), _duration)
+                    .DOLocalMove(new Vector3(-150, -250), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject));
 
         _sequence.Append(_helper.transform
-                    .DOLocalMove(new Vector3(-550, 250), _duration)
+                    .DOLocalMove(new Vector3(-350, 250), _duration)
+                    .SetEase(Ease.Linear)
+                    .SetLink(_enemy.gameObject));
+
+        _sequence.Append(_helper.transform
+                    .DOLocalMove(new Vector3(-550, -250), _duration)
                     .SetEase(Ease.Linear)
                     .SetLink(_enemy.gameObject))
                     .OnComplete(() =>
