@@ -15,7 +15,7 @@ public class ScoreCounter : MonoBehaviour
     public int WaveCounter => _waveCounter;
 
     public static UnityEvent StartNextWaveEvent = new UnityEvent();
-
+    
     public const int SCORE_FOR_START_MAZE = 25;
 
     private void Awake()

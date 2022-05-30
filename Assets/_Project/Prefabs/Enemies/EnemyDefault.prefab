@@ -120,7 +120,7 @@ MonoBehaviour:
   OnEndedMoving:
     m_PersistentCalls:
       m_Calls: []
-  _movementType: 1
+  _movementType: 0
   _movementHelperTemplate: {fileID: 8144797802265925176, guid: 89398b68ae3bf9240a7d4751b097f558, type: 3}
   _movementDuration: 3
   _rotationRadiusSpiral: 150
